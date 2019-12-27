@@ -1,5 +1,5 @@
 import java.util.Scanner;
-public class EverySingleOne {
+public class EverySingleOne1 {
     public static void main(String[] args) {
         Scanner scanner=new Scanner(System.in);
         int num=scanner.nextInt();
