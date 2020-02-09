@@ -1,0 +1,54 @@
+import java.util.Date;
+public class Employee{
+    private String name;    //姓名
+    private double salary;   //工资
+    private  Date birthday;     //生日
+    public String getName(){
+        return name;
+    }
+    public void setName(String name){
+        this.name = name;
+    }
+     public double getSalary(){
+        return salary;
+    }
+    public void setSalary(double salary){
+        this.salary = salary;
+    }
+     public Date getBirthday(){
+        return birthday;
+    }
+    public void setBirthday(Date birthday){
+        this.name = name;
+    }
+}
+
+public class Manager extends Employee {
+     private double bonus; //奖金
+     public void setBonus(double bonus){
+         this.bonus = bonus;
+     } 
+     public double getBonus(){
+         return bonus;
+     }
+}
+
+import java.util.Date;
+public class Test{
+    Employee employee = new Employee();
+    employee.setName("张辉");
+    employee.setSalary(3000);
+    employee.setBirthday(new Date());
+    Manager manager = new Manager();
+    manager.setName("赵旭");
+    manager.setSalary(6000);
+    manager.setBirthday(new Date());
+    manager.setBonus(2000);
+    System.out.println("员工的姓名：" + employee.getName());
+    System.out.println("员工的工资：" + employee.getSalary());
+    System.out.println("员工的生日：" + employee.getbirthday());
+    System.out.println("经理的姓名：" + manager.getName());
+    System.out.println("经理的工资：" + manager.getSalary());
+    System.out.println("经理的生日：" + manager.getbirthday());
+    System.out.println("经理的奖金："+ manager.getBonus());
+}
