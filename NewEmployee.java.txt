@@ -1,0 +1,21 @@
+public class NewEmployee{
+    public String getInfo(){
+        return "父类；xxxxxxxx";
+    }
+}
+
+public class Manager extends NewEmployee{
+     @Override
+     public String getInfo(){
+         return "子类：nnnnnnn";
+     }
+}
+
+public class Test1{
+    public static void main(String[] args){
+        NewEmployee employee = new NewEmployee();
+        System.out.println(employee.getInfo());
+        Manager manager = new Manager();
+        System.out.println(manager.getInfo());
+    }
+}
