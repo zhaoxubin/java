@@ -1,0 +1,41 @@
+public  abstract class Shape {
+    public String getName(){    //获得图形的名称
+        return this.getClass().getSimpleName();   
+    }
+    public abstract double getArea(); //获得图形的面积
+}
+
+public class Circle extends Shape {
+    private double radius;
+    public Circle(double radius){    //获取圆的半径
+        this.radius = radius;
+    }
+    @Override
+    public double getArea(){
+        return Math.PI * Math.pow(radius,2);  //返回圆的面积
+    }
+}
+
+public class Rectangle extends Shape {
+    private double length;
+    private double width;
+    public Rectangle(double length,double width){ //获取矩形的长和宽
+        this.length = length;
+        this.width = width;
+    }
+    @Override
+    public double getArea(){
+        return length * width;   //返回矩形的面积
+    }
+}
+
+public class Test2 {
+    public static void main(String[] args){
+        Circle circle  = new Circle(1);
+        System.out.println("图形的名称是：" + circle.getName());
+        System.out.println("图形的面积是：" + circle.getArea());
+        Rectangle rectangle = new Rectangle(2,3);
+        System.out.println("图形的名称是：" + rectangle.getName());
+        System.out.println("图形的面积是：" + rectangle.getArea());
+    }
+}
