@@ -1,0 +1,29 @@
+   public boolean isPerfectSquare(int num) {
+        if(num == 0 || num == 1){
+            return true;
+           }
+        if(num < 0) {
+         return false;
+          }   
+        int low, mid, high;
+        low = 0;
+        high = num;
+        while(low <= high)   
+        {
+            mid = (low+high)/2;
+            if(mid == num*1.0/mid)
+            {
+                return true;
+            }
+            else if(mid > num*1.0/mid)
+            {
+                high = mid-1;
+            }
+            else
+            {
+                low = mid+1;
+            }
+        }
+        return false;
+    }
+}
