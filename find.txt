@@ -1,0 +1,13 @@
+Node find(Node root, char toFind){  //在二叉树中查找某元素
+         if(root == null){
+             return null; //如果是空树，返回null；
+         }
+         if(root.val == toFind){  //如果根节点的值为查询的值及返回该节点
+             return root;
+         }
+         Node ret = find(root.left,toFind);  //在左子树中查找
+         if(ret.val == toFind){  //找到了就返回当前节点
+             return ret;
+         }
+         return find(root.right,toFind);  //左子树没找到就去右子树中找
+     }
