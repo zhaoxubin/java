@@ -1,0 +1,11 @@
+class Solution {
+    public int removeElement(int[] nums, int val) {
+        int j = 0; //定义一个指针
+        for(int i = 0; i < nums.length; i ++){  //循环遍历
+            if(nums[i] != val){      //只要nums[i] != val ,即存放到nums[j]的位置 
+                nums[j++] = nums[i]; 
+            }
+        }
+        return j;  //数组新长度即返回即可（j加加几次数组长度即为几）
+    }
+}
