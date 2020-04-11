@@ -1,0 +1,10 @@
+class Solution {
+    public int searchInsert(int[] nums, int target) {
+       for(int i = 0;i < nums.length;i++){  //循环遍历数组
+          if(nums[i] >= target){  //如果当前元素大于或等于给定值就返回此处位置，（此处应为等于此元素的位置或要插入的位置）
+              return i;
+          }
+      }  
+      return nums.length;//如果遍历完了也没找到合适位置，即插入数组尾部（length大小即可）
+    }
+}
