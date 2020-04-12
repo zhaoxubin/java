@@ -1,0 +1,13 @@
+public boolean canConstruct2(String ransomNote, String magazine) {
+        StringBuilder s = new StringBuilder(magazine); //将magazine字符串转换位StringBuilder
+        int index; //定义一个临时标记变量
+        for(char c: ransomNote.toCharArray()){ //将ransomNode转换位字符数组，并去遍历
+            index = s.indexOf(String.valueOf(c)); //找到s中的c在字符串中的下标便返回
+            if(index >= 0){  //如果index大于等于0表示找到了，
+                s.deleteCharAt(index); //并在s中删除防止下次重复查找到
+            } else {
+                return false;  //没找到直接返回false
+            }
+        }
+        return true;  //循环结束，还没有返回false就是true了
+    }
