@@ -1,0 +1,24 @@
+class Solution {
+    public boolean canConstruct(String ransomNote, String magazine) {
+          char[] data = magazine.toCharArray();  //将magazing转换为字符数组
+          for(int i = 0; i < ransomNote.length(); i ++){   //遍历数组
+              for(int j = 0; j < data.length; j++){   //遍历字符串ransomNote
+                  if(ransomNote.charAt(i) == data[j]){  //取出字符串中的第i位去字符数组中查找
+                      data[j] = '0';  //找到了就把数组中的这个位置的元素置
+                      break; //跳出本层循环
+                  }
+                 
+              }
+          }
+        int count = 0 ;
+        for(int k = 0 ; k < data.length; k ++){  //去数组中统计0的个数，如果0的个数与字符串ransomNode的长度相等即
+            if(data[k] == '0'){
+                count++;
+            }
+        }
+        if(count == ransomNote.length()){  //如果0的个数与字符串ransomNode的长度相等即可以构成
+            return true;
+        }
+        return false;
+    }
+}
