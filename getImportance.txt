@@ -1,0 +1,18 @@
+  public int getImportance(List<Employee> employees, int id) {
+        if(employees.size()==0) return 0;  //员工信息的顺数表为空
+        Queue<Integer> queue = new LinkedList<>();  //创建一个队列用来保存查找员工与其下属的id
+        queue.offer(id);  //首先放入要查找的员工的id
+        int result = 0;  //定义结果变量
+        while(!(queue.size()==0)){ //如果队列不为空，就进入循环
+            int tmp = queue.poll();//将队首元素出栈
+            for(Employee e: employees){ //遍历员工信息
+                if(tmp==e.id){  //如果出队列元素等于此时员工的d
+                    result += e.importance;//就将该员工的重要性加入结果
+                    for(int i: e.subordinates){  //将这个员工的下属id入队列，下次就去执行这个id
+                        queue.add(i);
+                    }
+                }
+            }
+        }
+        return result;
+    }
