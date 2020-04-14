@@ -1,0 +1,35 @@
+ 
+     public boolean isSubTree(TreeNode s, TreeNode t){
+         if (t == null && s == null){//如果两颗树都为空树就是认为相等的（即为子树）
+             return true;
+         }
+         if (s == null || t == null){//如果其中一颗树为空，另一颗树不为空，即不可能为子树
+             return false;
+         }
+         boolean ret = false;
+         if (s.val == t.val){
+             //如果两棵树根节点值相同，则进一步看看是否为同一棵树
+             ret = isSameTree(s,t);
+         }
+         if (!ret){
+             //如果根节点不相同就递归看看左子树是否包含t
+             ret = isSubTree(s.left,t);
+         }
+         if (!ret) {
+             //如果左子树中没有就去左子树中找
+             ret = isSubTree(s.right,t);
+         }
+         return ret;
+     }
+public boolean isSameTree(TreeNode root1, TreeNode root2){
+         if(root1 == null && root2 == null){  //如果两颗树都为空树就是认为相等的
+             return true;
+         }
+         if(root1 == null || root2 == null){  //如果其中一颗树为空，另一颗树不为空，即两棵树不相等
+             return false;
+         }
+         if(root1.val != root2.val){  //如果两棵树的对应根节点值不相同即为不同树
+             return false;
+         }
+         return isSameTree(root1.left,root2.left) && isSameTree(root1.right,root2.right);//递归判断根节点左右子树是否相同
+     }
