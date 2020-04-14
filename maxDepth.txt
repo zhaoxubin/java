@@ -1,0 +1,11 @@
+     public  int maxDepth(TreeNode root ){
+         if(root == null){ //如果为空树返回深度为0
+             return 0;
+          }
+          if(root.left == null && root.right == null){
+             return 1;    //只有根节点返回1即可
+         }
+         int leftMax = maxDepth(root.left); //递归求出左子树的深度
+         int rightMax = maxDepth(root.right);//递归求出右子树的深度
+         return 1 +  leftMax > rightMax  ?    leftMax : rightMax;
+     }
