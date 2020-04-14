@@ -1,0 +1,12 @@
+public boolean isSameTree(TreeNode root1, TreeNode root2){
+         if(root1 == null && root2 == null){  //如果两颗树都为空树就是认为等的
+             return true;
+         }
+         if(root1 == null || root2 == null){  //如果其中一颗树为空，另一颗树不为空，即两棵树不相等
+             return false;
+         }
+         if(root1.val != root2.val){  //如果两棵树的对应根节点值不相同即为不同树
+             return false;
+         }
+         return isSameTree(root1.left,root2.left) && isSameTree(root1.right,root2.right);//递归判断根节点左右子树是否相同
+     }
