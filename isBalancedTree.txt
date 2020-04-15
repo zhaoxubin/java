@@ -1,0 +1,15 @@
+ public  boolean isBalancedTree(TreeNode root) {
+         if (root == null) {
+             return false;  //如果为空树，则返回null
+         }
+         if(root.left == null && root.right == null){
+             return true;  //没有子树就返回true认为是平衡二叉树
+         }
+         //接下来看该节点的子树是否是平衡二叉树
+         int leftTree = maxDepth(root.left);
+         int rightTree = maxDepth(root.right);
+         if(leftTree - rightTree > 1 || leftTree - rightTree < -1){
+             return false;
+         }
+         return isBalancedTree(root.left)&&isBalancedTree(root.right);//递归遍历左右子树判断是否为平衡二叉树
+     }
