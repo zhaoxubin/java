@@ -1,0 +1,17 @@
+ public void levelOrder(TreeNode root){
+         if(root == null){
+             return;   //如果是空树，就直接返回
+         }
+        //先创建一个队列，用来存取节点
+        Queue<TreeNode> queue = new LinkedList<>();
+        queue.offer(root);  //先将根节点放入队列
+        while (!queue.isEmpty()){  //如果队列不为空就循环
+            TreeNode temp = queue.poll();  //先取出队首节点
+            System.out.print(temp.val +"  "); //并访问该节点
+            if(temp.left != null){   //把该节点的左右子树入队列
+                queue.offer(root.left);
+            }
+            if (temp.right != null){
+                queue.offer(root.right);
+            }
+        }
