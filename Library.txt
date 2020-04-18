@@ -1,0 +1,421 @@
+//主函数程序的入口
+package java_04_16_library;
+
+import java_04_16_library.book.BookList;
+import java_04_16_library.user.Admin;
+import java_04_16_library.user.Normaluser;
+import java_04_16_library.user.User;
+
+import java.util.Scanner;
+
+public class Main {
+    public static void main(String[] args) {
+        //1.先把数据准备好
+        BookList bookList = new BookList();
+        //2.创建用户并进行登录
+        User user = login();
+        //3.进入主循环
+        while(true) {
+            //4.循环内部调用menu方法显示用户菜单
+        int choice = user.menu();
+        user.doAction(choice,bookList);
+        }
+        //5.根据用户输入选项决定执行哪个IctionA完成操作
+    }
+
+    private static User login() {
+        //提示用户进行登录
+        Scanner scanner = new Scanner(System.in);
+        //请先登录系统！！！！！
+        System.out.println("请输入您的姓名");
+        String name = scanner.next();
+        System.out.println("请输入你的身份，1：管理员  2：普通用户");
+        int who = scanner.nextInt();
+        if(who == 1){
+            return new Admin(name);
+        }
+        return  new Normaluser(name);
+    }
+
+}
+
+=====================================
+
+//相关的动作类及接口
+package java_04_16_library.action;
+
+import java_04_16_library.book.Book;
+import java_04_16_library.book.BookList;
+
+
+import java.util.Scanner;
+
+public class AddAction implements IAction {
+    @Override
+    public void work(BookList bookList) {
+        System.out.println("执行新增操作！");
+        System.out.println("新增一本图书");
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("请输入书籍的名字");
+        String name = scanner.next();
+        System.out.println("请输入作者");
+        String author = scanner.next();
+        System.out.println("请输入价格");
+        int price = scanner.nextInt();
+        System.out.println("请输入书的类型");
+        String type = scanner.next();
+        //借出状态默认为未借出
+        Book book = new Book(name,author,price,type,false);
+        //把这个对象尾插到BookList中
+        int size = bookList.getSize();
+        bookList.setBook(size, book);
+        bookList.setSize(size+1);
+        System.out.println("新增图书成功");
+    }
+}
+---------------------------------------------------------
+
+package java_04_16_library.action;
+
+import java_04_16_library.book.Book;
+import java_04_16_library.book.BookList;
+
+import java.util.Scanner;
+
+public class BorrowAction implements IAction{
+    @Override
+    public void work(BookList bookList) {
+        System.out.println("执行借书操作");
+        System.out.println("请输入你要借的书籍的名字：");
+        Scanner scanner = new Scanner(System.in);
+        String name = scanner.next();
+        //先找到借的书，再把书的状态改为借出即可
+        for (int i = 0; i < bookList.getSize() ; i++) {
+            Book book = bookList.getBook(i);
+            if(book.getName().equals(name)){
+                if (book.isBorrowed()){   //如果书已经借出，直接返回
+                    continue;
+                } else {
+                    book.setBorrowed(true);
+                    System.out.println("借书成功");
+                    return;
+                }
+            }
+        }
+       //可能书籍不存在或者已经借出
+        System.out.println("借书失败，没有匹配的书籍");
+    }
+}
+-------------------------------------------------------------------
+
+import java_04_16_library.book.Book;
+import java_04_16_library.book.BookList;
+
+import java.util.Scanner;
+
+public class DelAction implements IAction{
+    @Override
+    public void work(BookList bookList) {
+        System.out.println("执行删除操作");
+        System.out.println("请输入要删除书籍的名字");
+        Scanner scanner = new Scanner(System.in);
+        String name = scanner.next();
+        //先找到书籍对应的位置
+        int i = 0;
+        for (; i < bookList.getSize() ; i++) {
+            Book book = bookList.getBook(i);
+            if (book.getName().equals(name)){   //找到了直接退出
+                break;
+            }
+        }
+        if (i >= bookList.getSize()){
+            System.out.println("删除失败，没有找到对应的书籍");
+        }
+        //循环结束后i的位置就是要删除书籍的位置
+        //顺序表中，删除尾部元素最简单，size--即可，中间元素涉及到搬运
+        //所以为了简便，我们将转换为尾删
+        //只需要将末尾元素插到i位置，最后将末尾元素删除
+        int size = bookList.getSize();
+        bookList.setBook(i,bookList.getBook(size-1));
+        bookList.setSize(size-1);
+    }
+}
+------------------------------------------------------------------------------
+package java_04_16_library.action;
+
+import java_04_16_library.book.Book;
+import java_04_16_library.book.BookList;
+
+public class DisplayAction implements IAction {
+    @Override
+    public void work(BookList bookList) {
+        for (int i = 0; i <bookList.getSize();  i++) {
+            Book book = bookList.getBook(i);
+            System.out.println(book);
+        }
+    }
+}
+--------------------------------------------------------------------------
+package java_04_16_library.action;
+
+import java_04_16_library.book.BookList;
+
+public class ExitAction implements IAction {
+    @Override
+    public void work(BookList bookList) {
+        System.out.println("Good Bye");
+        System.exit(0);
+    }
+}
+----------------------------------------------------------
+package java_04_16_library.action;
+
+import java_04_16_library.book.Book;
+import java_04_16_library.book.BookList;
+
+import java.util.Scanner;
+
+public class FindAction implements IAction {
+    @Override
+    public void work(BookList bookList) {
+     //执行查找操作
+    //根据名字来找到对应的书籍信息
+        System.out.println("请输入要查找的书名");
+        Scanner scanner = new Scanner(System.in);
+        String name = scanner.next();
+        for (int i = 0; i < bookList.getSize(); i++) {
+            Book  book = bookList.getBook(i);
+            if(book.getName().equals(name)){
+                System.out.println(book);
+            }
+        }
+    }
+}
+------------------------------------------------------------
+package java_04_16_library.action;
+
+import java_04_16_library.book.BookList;
+
+public interface IAction {
+    void work(BookList bookList);
+}
+
+--------------------------------------------------------
+package java_04_16_library.action;
+
+import java_04_16_library.book.Book;
+import java_04_16_library.book.BookList;
+
+import java.util.Scanner;
+
+public class ReturnAction implements IAction {
+    @Override
+    public void work(BookList bookList) {
+        System.out.println("执行还书操作");
+        System.out.println("请输入你要还的书的书的名字");
+        Scanner scanner = new Scanner(System.in);
+        String name = scanner.next();
+        for (int i = 0; i < bookList.getSize() ; i++) {
+            Book book = bookList.getBook(i);
+            if(book.getName().equals(name)){
+               if (book.isBorrowed()){
+                   book.setBorrowed(true);
+                   System.out.println("还书成功");
+                   return;
+               }
+            }
+        }
+        System.out.println("还书失败");
+    }
+}
+==============================================
+书籍的基本信息类，及书籍链表类
+public class Book {
+    private  String name;  //书名
+    private  String author; //作者
+    private  int price; //价格
+    private  String type; //小说类型》》》小说，散文.....
+    private  boolean isBorrowed;
+
+    public Book(String name, String author, int price, String type, boolean isBorrowed) {
+        this.name = name;
+        this.author = author;
+        this.price = price;
+        this.type = type;
+        this.isBorrowed = isBorrowed;
+    }
+
+    @Override
+    public String toString() {
+        return "Book{" +
+                "name='" + name + '\'' +
+                ", author='" + author + '\'' +
+                ", price=" + price +
+                ", type='" + type + '\'' +
+                ", isBorrowed=" + isBorrowed +
+                '}';
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getAuthor() {
+        return author;
+    }
+
+    public void setAuthor(String author) {
+        this.author = author;
+    }
+
+    public int getPrice() {
+        return price;
+    }
+
+    public void setPrice(int price) {
+        this.price = price;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    public boolean isBorrowed() {
+        return isBorrowed;
+    }
+
+    public void setBorrowed(boolean borrowed) {
+        isBorrowed = borrowed;
+    }
+}
+-------------------------------------------------------------------
+package java_04_16_library.book;
+//用来表示多本书
+public class BookList {
+    //相当于顺序表
+    private Book[] books = new Book[100];
+    //数组中的有效元素的个数
+    private int size = 0 ;
+    public BookList() {
+        //先默认加几个数据进去，方便后面测试
+        books[0] = new Book("三国演义","罗贯中",100,"古典名著",false);
+        books[1] = new Book("西游记","吴承",120,"古典名著",false);
+        books[2] = new Book("斗破苍穹","天蚕土豆",80,"玄幻小说",false);
+        size = 3;
+    }
+    public Book getBook(int pos){  //获取书籍
+        return  books[pos];
+    }
+    public void setBook(int pos , Book book ){  //插入书籍
+        books[pos] = book;
+    }
+    public int getSize() {
+        return size;
+    }
+
+    public void setSize(int size) {
+        this.size = size;
+    }
+}
+=============================================
+用户的抽象类及普通用户类和管理员的类
+package java_04_16_library.user;
+
+import java_04_16_library.action.IAction;
+import java_04_16_library.book.BookList;
+
+//User并不需要创建实例，真正需要创建的是NormalUser和Admin
+abstract public  class User {
+       protected String name;
+       //当前用户都支持那些操作
+       protected IAction[] actions;
+       //打印一个命令行菜单
+       //由于普通用户和管理员支持的操作不同，交互的菜单也就不同
+       //就需要普通用户和管理员中各自实现各自的菜单
+       abstract  public int menu();
+       //还需要一个公共的每种用户都需要的方法
+       public void  doAction(int choice, BookList bookList){
+          //choice就是用户通过命令行菜单输入的选项
+              //根据输入选项在数组中选择合适的对象来进行操作
+              actions[choice].work(bookList);
+       }
+}
+----------------------------------------------------------------------------------
+package java_04_16_library.user;
+
+import java_04_16_library.action.*;
+
+import java.util.Scanner;
+
+public class Normaluser extends User {
+
+    public Normaluser(String name) {
+        this.name = name;
+        this.actions =  new IAction[]{
+              new ExitAction(),
+              new FindAction(),
+              new BorrowAction(),
+              new ReturnAction()
+        };
+     }
+    @Override
+    public int menu() {
+        System.out.println("============================");
+        //用户输入的选项和下标要匹配
+        System.out.println("欢迎使用" + this.name + "该图书馆管理系统" );
+        System.out.println("1:查找书籍");
+        System.out.println("2:借书");
+        System.out.println("3:还书");
+        System.out.println("0:退出");
+        System.out.println("============================");
+        System.out.println("请输入你的选择");
+        int choice = 0;
+        Scanner scanner = new Scanner(System.in);
+        choice = scanner.nextInt();
+        return choice;
+    }
+}
+--------------------------------------------------------------------------------------
+package java_04_16_library.user;
+
+import java_04_16_library.action.*;
+
+import java.util.Scanner;
+
+
+public class Admin extends User {
+    public Admin(String name) {
+        this.name = name;
+        this.actions = new IAction[]{
+                new ExitAction(),
+                new FindAction(),
+                new AddAction(),
+                new DelAction(),
+                new DisplayAction()
+        };
+    }
+    @Override
+    public int menu() {
+        System.out.println("===============================");
+        System.out.println("欢迎" + this.name + "使用图书管理系统，您是管理员");
+        System.out.println("1: 查找图书");
+        System.out.println("2: 新增图书");
+        System.out.println("3: 删除图书");
+        System.out.println("4: 打印所有图书");
+        System.out.println("0: 退出");
+        System.out.println("===============================");
+        System.out.println("请输入你的选择");
+        int choice = 0;
+        Scanner scanner = new Scanner(System.in);
+        choice = scanner.nextInt();
+        return choice;
+    }
+}
