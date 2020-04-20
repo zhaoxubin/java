@@ -1,0 +1,33 @@
+class Solution {
+    public int myAtoi(String str) {
+     char[] array = str.toCharArray();  //将字符串转为字符数组
+     int n = array.length;  //求出字符数组长度
+     int index = 0;  //设定下标指针
+//除去开头空格
+     while(index < n && array[index] == ' '){ //当下标小于数组长度时，并且下表位置字符为空格就跳过
+         index++;
+     }
+     if(index == n){   ////去掉前导空格以后到了末尾了
+         return 0;
+     }
+     boolean negative = false;  //设置boolean 类型变量用来判断返回结果为正为负
+     if(array[index] == '-'){ //如果为‘-’字符，即将negative变量置为true
+         negative = true;
+         index++;  //继续取下一个字符
+     }else if(array[index] == '+') {  //如果是‘+’即直接取下一个字符
+          index++;
+     } else if(!Character.isDigit(array[index])){  //如果刚开始便匹配到除数字及符号位就是无法完成正常转换，返回0
+         return 0;
+     }
+     int ans = 0;//定义保存结果的变量
+     while(index < n && Character.isDigit(array[index])){  ///当下标小于数组长度时，并且下标位是数字0-9
+         int temp = array[index] - '0';//将字符转换为int整型
+         if(ans > (Integer.MAX_VALUE - temp)/10){  //如果ans超出范围int整形的范围就返回相应最小最大取值[-2^31 --2^31-1] 
+             return negative? Integer.MIN_VALUE : Integer.MAX_VALUE;
+         }
+         ans = ans*10 + temp;  //向后取一位就乘10是因为前面的都是高位
+         index ++;
+     }
+     return negative? -ans : ans;   //最后返回结果
+    }
+}
