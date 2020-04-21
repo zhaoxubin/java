@@ -1,0 +1,15 @@
+    public static boolean isPalindrome(String s) {
+        if(s == null){  //如果为空返回真
+            return true;
+        }
+        s = s.toLowerCase();   //将字符转换为小写
+        int  L = s.length();
+        StringBuilder sb = new StringBuilder(L);  //创建StringBuilder sb 
+        for (char c : s.toCharArray()) {  //将字符串转化为字符数组并遍历
+            if( (c >= '0' && c <= '9') || (c >= 'a' && c <= 'z') ){  //如果是字符或数字就加入sb
+                sb.append(c);
+            }
+        }
+        return  sb.toString().equals(sb.reverse().toString());  //最后比较正序逆序返回结果即可
+    }
+}
