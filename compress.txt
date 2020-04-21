@@ -1,0 +1,21 @@
+class Solution {
+    public int compress(char[] chars) {
+      int index = 0; 
+        int indexAns = 0 ;
+      while(index < chars.length){
+          char ret = chars[index];
+          int count = 0;
+         while( index < chars.length && chars[index] == ret){
+              count++ ;
+              index++;
+          }
+          chars[indexAns++]=ret;
+           if(count!=1){
+               for(char c:String.valueOf(count).toCharArray()){
+                   chars[indexAns++]=c;
+               }
+           }
+       }
+       return indexAns; 
+      }
+    }
