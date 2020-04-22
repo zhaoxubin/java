@@ -1,0 +1,26 @@
+    public static int evalRPN(String[] tokens) {
+        Stack<Integer> stack = new Stack<> (); //创建一个栈
+        int a = 0;  //定义两个变量
+        int b = 0;  
+        for(String cur : tokens){  //遍历字符串数组
+            if(cur.equals( "+")){    //如果匹配到+号，就取出栈内两个数字求和
+               stack.push(stack.pop() + stack.pop());  
+            } else if(cur.equals(" - ")){//如果匹配到-号，就取出栈内两个数字求差（注意第二次取出的为被减数）
+                b = stack.pop();
+                a = stack.pop();
+                stack.push(a - b);
+            } else if(cur.equals("*")){  如果匹配到*号，就取出栈内两个数字求积
+                stack.push(stack.pop()*stack.pop());
+            } else if(cur.equals("/")){  ////如果匹配到/号，就取出栈内两个数字求商（注意第二次取出的的为被除数）
+                 b = stack.pop();
+                 a = stack.pop();
+                 stack.push(a/b);
+            } else {
+                try{
+                    stack.push(Integer.parseInt(cur));
+                } catch (NumberFormatException e){   //捕捉到数字格式异常
+                   e.printStackTrace();  //打印异常栈信息
+                }
+            }
+        }
+        return  stack.pop();  //遍历结束栈内就只有一个整数，返回即可
