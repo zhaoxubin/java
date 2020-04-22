@@ -1,0 +1,19 @@
+class Solution {
+public int findUnsortedSubarray(int[] nums) {
+int[] snums=nums.clone(); //复制一个数组
+Arrays.sort(nums);  //对原有数组排序
+int count=0,stop=0;   //定义两个下标
+for(int i=0;i<nums.length;i++){      //这个遍历找到第一个不相等的位置
+if(nums[i]!=snums[i]){
+count=i;
+break;
+}
+}
+for(int i=0;i<nums.length;i++){  //这个遍历找到最后一个不相等的位置
+if(nums[i]!=snums[i]){
+stop=i;
+}
+}
+return stop-count +1;  
+}
+}
