@@ -1,0 +1,15 @@
+    public static List<List<Integer>> subsets(int[] nums) {
+        List<List<Integer>> list = new ArrayList<>(); //先创建一个二维list
+        list.add(new ArrayList<>()); //首先给外围Arraylist放入一个新的Arraylist即"[]"
+        for (int i = 0; i < nums.length; i++) {  //遍历数组
+            int size = list.size(); //求出循环中的size(是变化的)
+
+            for(int j = 0; j < size; j++){ //遍历当前循环下的外围Arraylist
+                List<Integer> rec = new ArrayList<>(list.get(j));  //用内部的每个元素取叠加数组元素
+                rec.add(nums[i]);
+                list.add(rec);//将结果放入list
+            }
+        }
+       return list;  //返回list
+    }
+}
