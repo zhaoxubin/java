@@ -1,0 +1,26 @@
+class Solution {
+    public List<Integer> rightSideView(TreeNode root) {
+        List<Integer> list = new ArrayList<>();  //创建一个List实例用来保存结果
+        if(root == null){   //如果是空树就直接返回空的list
+            return list;
+        }
+        Queue<TreeNode> queue = new LinkedList<>();  //创建一个队列用来对树进行层序遍历
+        queue.offer(root);
+        while(!queue.isEmpty()){
+            int size = 0;        //size为每次存入的一层节点的个数,借助循环即可找到
+            for(int i = 0; i < size; i++){
+                TreeNode node = queue.poll();
+                if(node.left != null){
+                    queue.offer(node.left);
+                }
+                if(node.right != null){
+                    queue.offer(node.right);
+                }
+                if(i == size-1){
+                    list.add(node.val);
+                }
+            }
+        }
+         return list;
+    }
+}
