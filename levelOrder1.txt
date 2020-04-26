@@ -1,0 +1,23 @@
+public static List<List<Character>> levelOrder(Node root) {
+        if(root == null) {
+            return new ArrayList<>();
+        }
+        List<List<Character>> res = new ArrayList<>(); //创建一个二维List内部List用来存储每层的数据
+        Queue<Node> queue = new LinkedList<Node>();
+        queue.add(root);
+        while(!queue.isEmpty()){
+            int count = queue.size();  //每次循环获取到的size为上次循环新进入的结点
+            List<Character> list = new ArrayList<>();
+            while(count > 0){
+                Node node = queue.poll();
+                list.add(node.val);
+                if(node.left != null)
+                    queue.add(node.left);
+                if(node.right != null)
+                    queue.add(node.right);
+                count--;
+            }
+            res.add(list);
+        }
+        return res;
+    }
