@@ -1,0 +1,25 @@
+public class InterviewTree {
+    private TreeNode lca = null; //用来表示最近公共结点
+    public TreeNode lowestCommentAncestor(TreeNode root, TreeNode p, TreeNode q){
+        if(root == null){
+            return null;  //如果为空树就返回null
+        }
+        //find递归查找过程，如果找到了，就保存到lac中
+        findNode(root, p , q);
+        return lca;
+    }
+    //从root出发看能不能找到p或者q，如果找到了一个就返回true，两个都没找到返回false
+    public  boolean findNode(TreeNode root, TreeNode p, TreeNode q) {
+        if(root == null){
+            return false;  //如果为空树返回false
+        }
+        //递归按照后序遍历的方式来查找
+        int left = findNode(root.left,p,q) ? 1 : 0;
+        int right = findNode(root.right,p,q) ? 1 : 0;
+        int mid = (root == p || root == q) ? 1 : 0;
+        if(left + right + mid == 2){
+            lca = root;
+        }
+        return (left+right+mid) > 0;
+    }
+}
