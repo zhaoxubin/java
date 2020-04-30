@@ -1,0 +1,33 @@
+private int index ; //用来表示当前访问到先序遍历的第几个元素le
+    public TreeNode buildTree(int[] preorder,int[] inorder){
+        index = 0;
+        return buildTreeHepler(preorder,inorder,0,inorder.length);
+    }
+     //[left,right)这个区间就表示当前preorder[index]对应的节点的中序遍历结果
+    private TreeNode buildTreeHepler(int[] preorder, int[] inorder, int left, int right) {
+        if(left >= right){
+            return null; //中序遍历结果为空，这个树就是空树
+        }
+        if(index >= preorder.length ){
+            //遍历元素结束
+            return null;
+        }
+        //根据当前根节点值创建新节点
+        TreeNode root= new TreeNode(preorder[index]);
+        index++;//节点创建完毕index++准备处理下一个节点
+        //根据该节点在中序遍历结果中的位置把inorder数组划分成两部分
+        int post = find(inorder,left,right,root.val);
+        //[left,post)表示当前root左子树的中序遍历结果
+        //[pos+1,right)表示当前root右子树的中序遍历结果
+        root.left = buildTreeHepler(preorder,inorder,left,post);
+        root.right = buildTreeHepler(preorder, inorder, post+1, right);
+        return root;
+    }
+    private int find(int[] inorder,int left,int right,int toFind){
+        for (int i = left; i < right ; i++) {
+            if(inorder[i] == toFind){
+                return i;
+            }
+        }
+        return -1;
+    }
