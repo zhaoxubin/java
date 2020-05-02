@@ -1,0 +1,30 @@
+//使用sb表示最终得到的字符串结果
+    //递归过程中得到的局部结构都往sb中追加即可
+    private StringBuilder sb = new StringBuilder();
+    public String tree2str(TreeNode t) {
+      if(t == null){
+          //如果是空树就返回空字符串
+          return "";
+      }
+      //借助help方法递归进行先序遍历
+      help(t);
+      sb.deleteCharAt(0);
+      sb.deleteCharAt(sb.length()-1);
+      return sb.toString();
+    }
+
+    private void help(TreeNode t) {
+        if(t == null){
+            return;
+        }
+        //访问根节点，此处访问操作追加到sb结果中
+       sb.append("(");
+        sb.append(t.val);
+        help(t.left);
+        if(t.left == null && t.right != null){
+            //此时左子树为空，右子树不为空，必须加一组括号占位
+            sb.append("()");
+        }
+        help(t.right);
+       sb.append(")");
+    }
