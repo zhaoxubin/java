@@ -1,0 +1,17 @@
+ public static void preOrderTreeByLoop(TreeNode root){
+        if(root == null){
+            return; //如果是空树就直接返回
+        }
+        Stack<TreeNode> stack = new Stack<>();  //借助栈来模拟递归实现
+        stack.push(root); //先将根几点放入栈
+        while(!stack.isEmpty()){  //如果栈不为空就循环
+            TreeNode top = stack.pop(); //首先取出并访问当前栈首元素
+            System.out.print(top.val + " ");
+            if(top.right != null){  //如果当前栈首元素的左右子树不为空就放入栈中
+                stack.push(top.right);
+            }
+            if(top.left != null){
+                stack.push(top.left);
+            }
+        }
+    }
