@@ -1,0 +1,35 @@
+    //向下调整
+    //通过size指定array中哪些元素是有效的堆元素
+    //index表示从哪个位置的下标开始调整
+    //左右子树都是堆才能进行调整
+    public static void shiftDown(int[] array, int size,int index ){
+        int parent  = index;
+        int child = 2 * index + 1;//通过parent找到child的下标
+        while(child < size){
+            //比较左右子树找到较小值
+            if(child + 1 < size && array[child+1] < array[child] ){
+                child = child + 1;
+            }
+            //经过上面的比较已经不知道child是左子树，还是右子树了
+            //但是child下标一定对应左右子树中的较小值下标
+
+            //拿child位置元素与parent位置元素比较
+            if(array[child] < array[parent]){  //不符合就交换父子节点
+                int temp = array[child];
+                array[child] = array[parent];
+                array[parent] = temp;
+            } else {
+                //调整完毕，不需要再调整
+                break;
+            }
+            //更新parent和child节点，处理下一层数据
+            parent = child;
+            child = 2 * parent + 1;
+        }
+    }
+    //建堆
+    public static void creatHeap(int[] array, int size){
+        for(int i = (size - 1 - 1)/2; i >= 0; i --){
+           shiftDown(array,size,i);
+        }
+    }
