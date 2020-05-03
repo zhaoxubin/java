@@ -1,0 +1,29 @@
+    public static void postOrderTreeByLoop(TreeNode root){
+        if(root == null){
+            return; //如果为空树就返回
+        }
+        //依旧用一个栈来进行辅助
+        Stack<TreeNode> stack = new Stack<>();
+        TreeNode cur = root; //
+        //prev记录了访问过节点的最后一个节点（即将访问过节点的前一个节点）
+        TreeNode prev = null;
+        while(true){
+            while(cur != null){
+                stack.push(cur);
+                cur = cur.left;
+            }
+            if(stack.isEmpty()){
+                break;
+            }
+            //拿出栈顶元素看看能不能访问
+            TreeNode top = stack.peek();
+            if(top.right == null || prev == top.right){
+                //当前节点没有右子树，或者右子树为空时就取出栈顶元素，并访问
+                System.out.print(top.val+" ");
+                stack.pop();
+                prev = top; //时刻记录遍历完元素的最后一个元素
+            }else{
+                cur = top.right; //否则让下一次从当前栈顶元素的右子树出发
+            }
+        }
+    }
