@@ -1,0 +1,19 @@
+    //默认为升序排序
+    public static void insertSort(int[] array){
+        //通过bound划分出两个区间
+        //[0，bound)表示已排序区间
+        //[bound，size )为待排序区间
+        for (int bound = 1; bound < array.length  ; bound++) {//默认0号位置已将是排序得了，从1开始
+            int v = array[bound];//取出bound位置元素往前插
+            int cur = bound-1; //从bound-1的位置开始找位置,
+            for(;cur >= 0; cur--){
+                if(array[cur] > v){ //注意如果这个条件写成>=依旧可以完成排序，但是不为稳定排序了
+                   array[cur+1] = array[cur];
+                }else {
+                    break;//找到了合适的位置
+                }
+            }
+            //此时的cur+1位置即要插入的位置
+            array[cur+1] = v;
+        }
+    }
