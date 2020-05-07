@@ -1,0 +1,13 @@
+public static void selectSort(int[] array){
+    for (int bound = 0; bound < array.length ; bound++) {
+        //[0,bound)为已排序区间bound位置元素为擂主，循环取出待排序区间元素与擂主比较
+        //如果小就交换（即打擂成功）
+        for(int cur = bound+1;cur < array.length;cur++){
+            if(array[bound] > array[cur]){  //打擂成功
+                int temp = array[bound];
+                array[bound] = array[cur];
+                array[cur] = temp;
+            }
+        }
+    }
+}
