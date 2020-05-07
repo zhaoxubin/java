@@ -1,0 +1,45 @@
+    public static void heapSort(int[] array){
+        //先建大堆
+    CreatHeap(array);
+    //循环把堆顶元素交换到最后，并调整堆
+    for (int i = 0; i < array.length-1; i++) {
+        //当堆中只剩一个元素，也不需要进行调整，本来就是有序的
+        swap(array,0,array.length-1-i); //堆中元素个数为length-i,所以最后一个元素下标为length-i-1
+        //交换完之后把最后一个元素删掉
+        //堆的长度又进一步缩水了
+        //数组中
+        //[0,array.length-i-1)为待排序区间
+        //[array.length-i-1,array.length)为已排序区间
+        shiftDown(array,array.length-i-1,0);
+    }
+}
+
+    public static void CreatHeap(int[] array) {
+        //从最后一个非叶子节点出发向前循环，依次进行向下调整
+        for(int i = (array.length-1-1)/2;i >=0;i--){
+            shiftDown(array,array.length,i);
+        }
+    }
+
+    public static void shiftDown(int[] array, int heapLength, int index) {
+        int parent = index;
+        int child = index*2 +1;
+        while(child <heapLength){
+            if(child+1 < heapLength && array[child+1] > array[child]){
+                child = child +1;
+            }
+            //条件结束，child已经指向左右子树中较大的数
+            if(array[child] > array[parent]){
+                swap(array,child,parent);
+            }
+            parent = child;
+            child = parent*2+1;
+        }
+
+    }
+
+    public static void swap(int[] array,int i, int j){
+        int temp = array[i];
+        array[i] = array[j];
+        array[j] = temp;
+}
