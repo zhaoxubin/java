@@ -1,0 +1,54 @@
+    public static void swap(int[] array,int i, int j){
+        int temp = array[i];
+        array[i] = array[j];
+        array[j] = temp;
+}
+public static void quickSortByLoop(int[] array) {
+        //借助栈来模拟递归
+       //stack用来存放数组下标，通过数组下标来表示接下来要处理的区间是啥
+    Stack<Integer> stack = new Stack<>();
+    //初始情况下，把左右边界下标入栈，左右边界仍构成闭区间
+    stack.push(array.length-1);
+    stack.push(0);
+    while(!stack.isEmpty()){
+        //取出来的顺序和push的顺序刚好相反
+        int left = stack.pop();
+        int right = stack.pop();
+       if(left >= right){
+            //区间内只有一个或0个元素不需要调整
+            continue;
+        }
+        //通过partition把数据调整为以基准值为中心，左侧元素小于基准值，右侧元素大于基准值的序列
+       int index = partition(array,left,right);
+        //准备处理下个区间
+        //[index+1,right]为基准值右侧范围
+            stack.push(right);
+            stack.push(index + 1);
+        //[left,index-1]为基准值左侧数据
+            stack.push(index - 1);
+            stack.push(left);
+    }
+}
+public static int partition(int[] array, int left, int right) {
+    int i = left;
+    int j = right;
+    int base = array[right];//取区间最后一位为基准值
+    while(i < j){
+        //从左往右找比基准值大的元素
+        while(i < j && array[i] <= base){
+            i++;
+        }
+        //当上面的循环结束之后，i要么和j重合，要么指向了一个比基准值base小大的元素
+        //从右往左找比基准值小的元素
+        while(i < j && array[j] >= base){
+            j--;
+        }
+        //当上面的循环结束之后，i要么和j重合，要么j指向了一个比基准值base小的元素
+        //交换i和j的值
+        swap(array,i,j);
+    }
+    //当i和j重合的时候，最后一步，把重合位置元素和基准值的交换
+    swap(array,i,right);
+    return i;
+}
+
