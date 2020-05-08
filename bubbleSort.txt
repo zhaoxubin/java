@@ -1,0 +1,17 @@
+    public static void swap(int[] array,int i, int j){
+        int temp = array[i];
+        array[i] = array[j];
+        array[j] = temp;
+}
+public static  void bubbleSort(int[] array){
+        //从前往后找最小的方式进行排序
+    //[0,bound)为已排序区间
+    //[bound,size)为待排序区间
+    for(int bound = 0 ; bound < array.length;bound++){
+        for(int cur = array.length-1;cur > bound; cur--){
+            if(array[cur-1] > array[cur]){
+                swap(array,cur-1,cur);
+            }
+        }
+    }
+    }
