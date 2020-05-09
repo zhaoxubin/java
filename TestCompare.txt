@@ -1,0 +1,43 @@
+
+class Card{
+    public String rank;  //点数
+    public String suit;  //花色
+
+    public Card(String rank, String suit) {
+        this.rank = rank;
+        this.suit = suit;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+     //按照值比较this和obj
+        // 1，自己与自己比较
+        if(this == obj){
+            return true;
+        }
+        //2，obj为null的情况
+        if(obj == null){
+            return false;
+        }
+        //3，obj类型不是当前card类型
+        if(! (obj instanceof Card) ){
+            return false;
+        }
+        //4,真正的比较内容
+        Card other = (Card)obj;
+        return this.rank.equals(other.rank) && this.suit.equals(other.suit);
+
+    }
+}
+public class TestCompare {
+    public static void main(String[] args) {
+        Card p = new Card("3","♠");
+        Card q = new Card("3","♠");
+        Card o = p;
+        System.out.println(o == p);  //测试 == 比较身份
+        System.out.println(p == q);
+        System.out.println("===============================");
+        System.out.println(p.equals(o));  //测试比较内容
+        System.out.println(p.equals(q));  //没有重写的话，使用的是Object中的原始的equals方法，相当于依旧比较的是身份
+    }
+}
