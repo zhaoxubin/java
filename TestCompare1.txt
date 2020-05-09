@@ -1,0 +1,78 @@
+
+
+import org.jetbrains.annotations.NotNull;
+
+class Card implements Comparable<Card>{
+    public String rank;  //点数
+    public String suit;  //花色
+
+    public Card(String rank, String suit) {
+        this.rank = rank;
+        this.suit = suit;
+    }
+
+    @Override
+    public int compareTo(@NotNull Card o) {
+        //如果this比o小，返回一个小于0的整数
+        //如果this比o大，返回一个大于0的整数
+        //如果this == o，返回0
+        if(o == null){
+            //一般我们就认为this比o大,null比较小
+            return  1;
+        }
+       //点数取值2-10. JQKA
+        int rank1 = this.getValue();
+        int rank2 = o.getValue();
+        return rank1-rank2;
+    }
+    private  int getValue(){
+        //通过这个方法把String类型变为整数点数
+        int value = 0;
+        if("j".equals(rank)){
+            value =  10;
+        } else if("Q".equals(rank)){
+            value = 11;
+        } else if("k".equals(rank)){
+            value = 12;
+        } else if("A".equals(rank)){
+            value = 14;
+        } else {
+            value = Integer.parseInt(rank);
+        }
+        return value;
+    }
+    @Override
+    public boolean equals(Object obj) {
+     //按照值比较this和obj
+        // 1，自己与自己比较
+        if(this == obj){
+            return true;
+        }
+        //2，obj为null的情况
+        if(obj == null){
+            return false;
+        }
+        //3，obj类型不是当前card类型
+        if(! (obj instanceof Card) ){
+            return false;
+        }
+        //4,真正的比较内容
+        Card other = (Card)obj;
+        return this.rank.equals(other.rank) && this.suit.equals(other.suit);
+
+    }
+}
+public class TestCompare {
+    public static void main(String[] args) {
+        Card p = new Card("3","♠");
+        Card q = new Card("3","♠");
+        Card o = p;
+//        //System.out.println(o == p);  //测试 == 比较身份
+//       // System.out.println(p == q);
+//       // System.out.println("===============================");
+//      //  System.out.println(p.equals(o));  //测试比较内容
+//      //  System.out.println(p.equals(q));  //没有重写的话，使用的是Object中的原始的equals方法，相当于依旧比较的是身份
+        System.out.println(p.compareTo(o));
+        System.out.println(p.compareTo(q));
+    }
+}
