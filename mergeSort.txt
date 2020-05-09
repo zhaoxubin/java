@@ -1,0 +1,52 @@
+//[low,mid)  有序区间
+//[mid,high)  有序区间
+    //把这两个区间合并为一个有序区间
+    public static  void merge(int[] array,int low,int mid,int high){
+        int[] output = new int[high-low]; //额外空间用来临时存放数据
+        int outputIndex = 0;//用来记录output中被放入了多少个元素
+        int cur1 = low;
+        int cur2 = mid;
+        while(cur1 < mid && cur2 < high ){
+            if(array[cur1] <= array[cur2]){
+                output[outputIndex] = array[cur1];
+                outputIndex++;
+                cur1++;
+            } else{
+                output[outputIndex] = array[cur2];
+                outputIndex++;
+                cur2++;
+            }
+        }
+        //循环结束肯定是cur1和cur2有一个先到达末尾
+        //把剩下的元素一股脑拷贝到output中
+        while(cur1 < mid){
+            output[outputIndex] = array[cur1];
+            outputIndex++;
+            cur1++;
+        }
+        while(cur2 < high){
+            output[outputIndex] = array[cur2];
+            outputIndex++;
+            cur2++;
+        }
+        //把output中的元素搬运回array中
+        for (int i = 0; i < high-low; i++) {
+            array[low+i] = output[i];
+        }
+    }
+    public static  void mergeSort(int[] array){
+        mergeSortHelper(array,0,array.length);
+    }
+//[low,high)为左闭右开区间.两者差值小于等于1，区间中就只有一个或两个元素
+    private static void mergeSortHelper(int[] array, int low, int high) {
+        if(high-low <= 1){
+            return;
+        }
+        int mid = (low + high)/2;
+        //这个方法执行完就认为low
+        mergeSortHelper(array,low,mid);
+        mergeSortHelper(array,mid,high);
+        //当左右区间归并排序完了，说明左右区间已经是有序区间了
+        //接下来就可以针对两个有序区间合并
+        merge(array,low,mid,high);
+    }
