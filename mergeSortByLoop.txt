@@ -1,0 +1,60 @@
+public static void mergeSortByLoop(int[] array){
+        //引入一个gap变量进行分组
+    //当gap为1的是时候[0) [1)进行合并，[2) [3)进行合并，[4) [5)进行合并，[6)[7)进行合并.....
+    //当gap为2的时候[0,1)和[2,3)进行合并，[4,5)和[6,7)进行合并......
+    //当gap为4的时候[0,1,2,3)和[4，5，6，7)进行合并.....
+    for (int gap = 1; gap < array.length;gap *= 2){
+        //接下来进行具体的分组合并
+        for(int i = 0; i < array.length;i += 2*gap){
+            //当前相邻组
+            //[begain,mid)
+            //[mid,end)
+            //begain =>i
+            //mid => i+gap
+            //end => i+2*gap
+            int beg = i;
+            int mid = i+ gap;
+            int end = i + 2*gap;
+            if(mid > array.length){  //防止越界
+                mid = array.length;
+            }
+            if(end > array.length){
+                end = array.length;
+            }
+            merge(array,beg,mid,end);
+        }
+    }
+}
+ public static  void merge(int[] array,int low,int mid,int high){
+        int[] output = new int[high-low]; //额外空间用来临时存放数据
+        int outputIndex = 0;//用来记录output中被放入了多少个元素
+        int cur1 = low;
+        int cur2 = mid;
+        while(cur1 < mid && cur2 < high ){
+            if(array[cur1] <= array[cur2]){
+                output[outputIndex] = array[cur1];
+                outputIndex++;
+                cur1++;
+            } else{
+                output[outputIndex] = array[cur2];
+                outputIndex++;
+                cur2++;
+            }
+        }
+        //循环结束肯定是cur1和cur2有一个先到达末尾
+        //把剩下的元素一股脑拷贝到output中
+        while(cur1 < mid){
+            output[outputIndex] = array[cur1];
+            outputIndex++;
+            cur1++;
+        }
+        while(cur2 < high){
+            output[outputIndex] = array[cur2];
+            outputIndex++;
+            cur2++;
+        }
+        //把output中的元素搬运回array中
+        for (int i = 0; i < high-low; i++) {
+            array[low+i] = output[i];
+        }
+    }
