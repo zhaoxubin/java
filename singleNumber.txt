@@ -1,0 +1,29 @@
+public int singleNumber(int[] nums){
+        //先创建一个Map<Integer,Integer>用来统计次数,key用来保存数组中的元素，value用来统计次数
+        Map<Integer,Integer> map = new HashMap<>();
+        //遍历数组，进行统计
+        for (int x : nums) {
+            //先将x对应的value取出来
+            Integer value = map.get(x);
+            //先判定一下这个元素是否存在Map中
+            if(value == null){
+                //如果不错在，就新增
+                map.put(x,1);
+            }else {
+                //存在就value+1,重新放入Map，覆盖掉之前的
+                map.put(x,value+1);
+            }
+        }
+        //遍历map，找到value为1的key
+        for (Map.Entry<Integer,Integer> entry : map.entrySet()){
+            //此处涉及两种比较方式
+            //1，使用 == ，因为得到的getValue是Integer包装类，所以要想和int比较，必须自动拆箱
+            //2，使用 equals，则是int的1进行自动装箱
+            //3.推荐使用equals
+            if(entry.getValue().equals(1)){
+                return entry.getKey();
+            }
+        }
+        //如果数组为空就返回，题目要求了，所以执行不到
+        return 0;
+    }
