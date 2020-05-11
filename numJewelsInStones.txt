@@ -1,0 +1,15 @@
+    public int numJewelsInStones(String J, String S) {
+      先遍历J把所有宝石加入到一个Set中
+        SetCharacter set = new HashSet();
+        for (Character x  J.toCharArray()) {
+            set.add(x);
+        }
+        int count = 0; 用来统计宝石个数
+        遍历S，拿出S中的每个元素去Set中查找，如果能找到，就是宝石
+        for(Character x  S.toCharArray()) {
+          if(set.contains(x)){
+              count++;
+          }
+        }
+        return count;
+    }
