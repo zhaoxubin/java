@@ -1,0 +1,28 @@
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.Set;
+
+public class TestSet {
+    public static void main(String[] args) {
+        //先创建一个Set对象
+        Set<String> set = new HashSet<>();
+        //添加元素
+        set.add("hello");
+        set.add("java");
+        set.add("world");
+        //判断元素是否存在
+        System.out.println(set.contains("java"));
+        //删除某个元素
+        set.remove("java");
+        System.out.println(set.contains("java"));
+        //遍历打印
+     //   System.out.println(set);
+        //如果想遍历set中的元素，就需要使用迭代器
+        
+        Iterator<String> iterator = set.iterator();
+        while(iterator.hasNext()){
+            String next = iterator.next();
+            System.out.print(next+" ");
+        }
+    }
+}
