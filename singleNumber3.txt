@@ -1,0 +1,29 @@
+ public int[] singleNumber3(int[] nums){
+        int ret = 0; //用来保存异或结果
+        for (int x : nums) {
+            ret^= x;
+        }
+        //循环结束此时ret中就是只存在一次的两个数的异或结果
+        //找到ret的bit位第一个为1的位置
+        int bit = 1;
+        int i = 0;
+        for(;i <32;i++){
+            if((ret&(bit<<i))!=0){
+                break;
+            }
+        }
+        //用这个bit位将数组分为两部分
+        int a = 0;
+        int b = 0;
+        for(int x : nums){
+            if ((x&(bit<<i))!=0){
+                //第一组，指定位位为1的
+                a ^= x;
+            } else{
+                //第二组，指定位位为0的
+                b^=x;
+            }
+        }
+        int[] array = {a,b};
+        return array;
+    }
