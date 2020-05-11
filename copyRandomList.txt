@@ -1,0 +1,28 @@
+ static class Node {
+        int val;
+        Node next;
+        Node random;
+
+        public Node(int val) {
+            this.val = val;
+            this.next = null;
+            this.random = null;
+        }
+    }
+    public Node copyRandomList(Node head) {
+        //1.遍历旧链表，把旧链表每个节点依次插入map中，key是旧链表节点，value是拷贝出来的新节点
+        Map<Node,Node> map = new HashMap<>();
+        for (Node cur = head; cur != null ; cur=cur.next) {
+            map.put(cur,new Node(cur.val));
+        }
+        //再次遍历链表修改新链表的next和random
+        for(Node cur =head; cur != null; cur=cur.next){
+            //先从map中找到该cur对应的新链表节点，
+            Node newCur = map.get(cur);
+            //修改
+            newCur.next = map.get(cur.next);
+            newCur.random = map.get(cur.random);
+        }
+        //返回新链表的头节点
+        return map.get(head);
+    }
