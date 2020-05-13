@@ -1,0 +1,23 @@
+    public List<String> topKFrequent(String[] words,int k){
+        //先统计各单词出现次数
+        Map<String,Integer> map = new HashMap<>();
+        for (String s : words ) {
+            int count = map.getOrDefault(s,0);//获取到当前单词出现次数
+            map.put(s,count+1);//存入map中
+        }
+        //把刚才统计到的字符串放到ArrayList中
+        //KeySet相当于得到了一个Set,Set中存放的就是所有的key
+        ArrayList<String> arrayList = new ArrayList(map.keySet());
+ 
+        //lambda表达式，本质上就是一个匿名方法
+        Collections.sort(arrayList, (o1, o2) ->{ 
+                int count1 = map.get(o1);
+                int count2 = map.get(o2);
+                if(count1 == count2){
+                  return  o1.compareTo(o2);
+                }
+                return count2-count1;
+            
+        });
+        return arrayList.subList(0,k);
+    }
