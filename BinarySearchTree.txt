@@ -1,0 +1,127 @@
+public class BinarySearchTree {
+    static class TreeNode{  //先写一个静态内部类来构建节点
+        int key;
+        TreeNode left;
+        TreeNode right;
+
+        public TreeNode(int key) {
+            this.key = key;
+        }
+    }
+    //root是根节点，root为null，就表示为空树
+    private TreeNode root = null;
+    public TreeNode find(int key){
+        //查找操作，判断树里是否存在key，存在就返回对应节点，没有就返回null
+        TreeNode cur = root;
+        while(cur != null){
+            if(key < cur.key){
+                //如果key小于该节点的值，就去该节点的左子树中找
+                cur = cur.left;
+            }else if(key > cur.key){
+                //如果key大于该节点的值，就去该节点的右子树中找
+                cur = cur.right;
+            } else {
+                return cur;   //如果key等于该节点的值，就直接返回该节点
+            }
+        }
+        return null;  //循环结束了没找到返回null
+    }
+    //二叉搜索树不允许存在相同key的元素
+    //如果发现插入的key重复了，就插入失败，返回false
+    //插入成功返回true
+    public boolean insert(int key){
+        if(root == null){
+           //如果为空树就直接让root指向对应的新节点,并且返回true
+            root = new TreeNode(key);
+            return true;
+        }
+        //和查找类似，先找到合适的位置再去插入元素
+        TreeNode cur = root;
+        TreeNode parent = null; //parent始终指向cur的的父节点，方便插入
+        while(cur != null){
+            if(key < cur.key){
+                parent = cur;
+                cur = cur.left;
+            } else if(key > cur.key){
+                parent = cur;
+                cur = cur.right;
+            } else{
+                //找到了一个相同值得节点，就插入失败
+                return  false;
+            }
+        }
+        //循环结束，cur指向了null，那么当前元素就要插入到parent得子树中
+        //到底是左子树还是右子树得和parent得key进行比较
+        if(key > parent.key){  //比parent得key大就插入右子树
+            parent.right = new TreeNode(key);
+        }else{//比parent得key小就插入左子树
+            parent.left = new TreeNode(key);
+        }
+        return true; //插入成功
+    }
+    //删除成功返回true删除失败返回false
+    public boolean remove(int key){
+       //存在则删除成功，不存在删除失败
+       //先找到要删除节点得位置，再进行删除
+       //先找到删除元素，再去看是哪种情况
+       TreeNode cur = root;
+       TreeNode parent = null;
+       while(cur != null){
+           if(key < cur.key){
+               parent = cur;
+               cur = cur.left;
+           } else if(key > cur.key){
+               parent = cur;
+               cur = cur.right;
+           } else {
+               //找到了要删除的元素位置，即cur指向得节点
+               removeTreeNode(parent,cur); //写一个方法去删除
+               return true; //删除成功
+           }
+       }
+       return false;
+    }
+
+    private void removeTreeNode(TreeNode parent, TreeNode cur) {
+        if(cur.left == null){
+            //如果要删除得节点得左子树为空
+            if(cur == root){
+                //如果删除节点为根节点，直接让root指向cur.right
+                root = cur.right;
+            }else  if(cur == parent.left){ //如果cur是parent的左子树
+                parent.left = cur.right;
+            }else {
+                //如果cur是parent的右子树
+                parent.right = cur.right;
+            }
+        } else if(cur.right == null){  //如果要删除得节点得右子树为空
+            if(cur == root){
+                //如果删除节点为根节点，直接让root指向cur.left
+                root = cur.left;
+            } else if(cur == parent.left){ //如果cur是parent的左子树
+                parent.left = cur.left;
+            } else{   //如果cur是parent的右子树
+                parent.right = cur.left;
+            }
+        }else{  ///如果要删除得节点得左右子树都不为空
+            //1，先找到待删除结点cur的右子树中的最小元素（替罪羊）（找左子树中的最大元素也可以）
+            TreeNode GoatParent = cur; //替罪羊节点的父节点 ，用来最后删除替罪羊结点
+            TreeNode scapeGoat = cur.right;//替罪羊节点
+            while(scapeGoat.left != null){  //依次往左找
+                GoatParent = scapeGoat;
+                scapeGoat = scapeGoat.left;
+            }
+            //当循环结束，scapeGoat指向右子树中的最小值
+            //2.把这个替罪羊的key赋给待删除结点
+            cur.key = scapeGoat.key;
+            //3.删除替罪羊结点
+              //替罪羊结点一定没有左子树
+            if(scapeGoat == GoatParent.left){  //如果替罪羊结点是父节点的左子树
+                GoatParent.left = scapeGoat.right;
+            }else{
+                //如果替罪羊结点是父节点的右子树
+                GoatParent.right = scapeGoat.right;
+            }
+        }
+    }
+}
