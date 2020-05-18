@@ -1,0 +1,97 @@
+//通过开散列的方式来处理哈希冲突
+public class MyHashMap {
+    static class Node{
+        public int key;
+        public int value;
+        public Node next;
+
+        public Node(int key, int value) {
+            this.key = key;
+            this.value = value;
+        }
+    }
+    private  static  final  double LOAD_FACTOR = 0.75; //定义一个负载影子常量/用来判断是否需要扩容
+    //array就是hash表的本体，数组每一个元素又是一个链表的头节点
+    private Node[] array = new Node[101];
+    private int size = 0; //表示当前hash表中的元素个数
+    private int hashFunc( int key){
+        //求当前key在hash表中的存储位置，实际中的求法比这个复杂多了
+        return  key%array.length;
+    }
+
+    //如果hash表中已经存在key就修改原来key的value
+    //如果不存在就插入就插入新的键值对
+      public void put(int key,int value){
+        //1,需要把key映射成数组下标
+        int index = hashFunc(key);
+        //取出当前数组中该位置的结点（即链表的头结点）
+        Node list = array[index];
+        //判断是key否存在链表中
+          for (Node cur = list; cur != null; cur = cur.next){
+              if(cur.key == value){
+                  //如果存在就修改当前结点的value
+                  cur.value = value;
+                  return;
+              }
+          }
+          //如果循环结束，没找到，就插入到对应数组的下标，
+          //这里采用头插，也可以尾插
+          Node newNode = new Node(key,value);
+          newNode.next = list;
+          array[index] = newNode;
+          index++;
+          if(size/array.length > LOAD_FACTOR){
+              resize(); //大于负载因子就扩容
+          }
+      }
+
+      private void resize(){  //扩容操作
+       Node[] newArray = new Node[array.length*2];
+          for (int i = 0; i < array.length; i++) {
+              for(Node cur = array[i]; cur != null; cur = cur.next){
+                  int index = cur.key%newArray.length;
+                  Node newNode = new Node(cur.key,cur.value);
+                  newNode.next = newArray[index].next;
+                  newArray[index] = newNode;
+              }
+          }
+          array = newArray;
+    }
+      //查找操作，查找key对应的value,如果找到了，就返回value,否则返回null
+    public Integer get(int key){
+        //首先我们得把key映射成数组下标
+        int index = hashFunc(key);
+        //取出该下标位置的链表
+        Node list = array[index];
+        //遍历链表进行查找
+        for (Node cur = list; cur != null; cur = cur.next){
+            if(cur.key == key){
+                return cur.value;   //找到了
+            }
+        }
+        //没找到
+        return null;
+    }
+    //删除key
+ public  void remove(int key){
+        int index = hashFunc(key);
+        Node list = array[index];
+        if(key == list.value){ //处理头删
+            array[index] = list.next;
+        }
+        //其他位置需要找到删除结点的前一个结点
+       Node prveNode = serch(key);
+        Node toRemove = prveNode.next;
+        prveNode.next = toRemove.next;
+ }
+      public  Node serch(int key){  //找到待删除结点的前一个结点
+          int index = hashFunc(key);
+          Node list = array[index];
+        for (Node cur = list; cur != null && cur.next != null; cur = cur.next ){
+            if(cur.next.key == key){
+                return cur;
+            }
+        }
+        return null;
+      }
+}
