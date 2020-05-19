@@ -1,0 +1,20 @@
+public class SafeThread {
+    private static int sum;
+    public  static  synchronized void increment(int j){
+    sum++;
+}
+    public  static  void main(String[] args) {
+        for (int i = 0; i < 20; i++) {
+            new Thread(()->{
+                for(int j = 0; j < 10000; j++){
+                    increment(j);
+                }
+            }).start();
+        }
+        //idea里使用debug运行，run得改为2
+        while(Thread.activeCount()>2)//判断子线程存活数量
+            Thread.yield();//让当前线程让步，当前线程（main线程）由运行态—>就绪态
+        System.out.println(sum);
+
+    }
+}
