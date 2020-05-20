@@ -1,0 +1,72 @@
+package java15_20200520;
+
+import java.util.Scanner;
+
+class  Animal{
+public  void eat(String food){
+
+}
+}
+ class Cat extends Animal{
+     public String name;
+     //此处写一个无参构造方法
+     public Cat(){
+         this.name = "小猫";
+     }
+     public Cat(String name) {
+         this.name = "小猫";
+     }
+      @Override
+     public void eat(String food) {
+         System.out.println(this.name + "正在吃" + food);
+     }
+ }
+
+ class  Bird extends Animal{
+     private String name;
+     public  Bird(){
+         this.name = "小鸟";
+     }
+     public  Bird(String name){
+         this.name = "小鸟";
+     }
+     @Override
+     public void eat(String food){
+         System.out.println(this.name + "正在吃" + food);
+     }
+ }
+    public class  TestReflect {
+        public static void main(String[] args) throws ClassNotFoundException, IllegalAccessException, InstantiationException {
+//            //1，如何获取类对象
+//            //1)通过字符串获取到类,参数是类的全限定类名
+//            Class catClass1 = Class.forName("java15_20200520.Cat");
+//
+//            //2).通过实例来获取，实例的getClass方法获取到类对象
+//            Cat cat = new Cat("小黑");
+//            Class catClass2 = cat.getClass();
+//
+//            //得到的类对象在内从中只有一份，不管通过哪种方式获取到的类对象，本质上都是同一个对象
+//            System.out.println(catClass1 == catClass2);
+//           //3),通过类来获取
+//            Class catClass3 = Cat.class;
+//            System.out.println(catClass3 == catClass1);
+
+            //2.通过类对象创建实例
+            //平常创建对象都是通过new的方式
+            //catClass表示Cat类的类对象，也就是Cat类的图纸
+            //newInstance 创建对应实例
+            //以下代码运行时出现了异常，Cat类没有提供无参数的构造方法，应为自己写了构造方法
+            //所以得再加一个无参构造，或屏蔽掉自己写的构造方法，让类加载时自动生成无参构造方法
+            //直接实例话会出现问题，类型不匹配，得强转
+//            Class catClass = Class.forName("java15_20200520.Cat");
+//            Cat cat = (Cat) catClass.newInstance();
+//            cat.eat("鱼");
+            Scanner scanner = new Scanner(System.in);
+
+            String className = scanner.next();
+            System.out.println("您要创建的实例类型为：" + className);
+            Class catClass = Class.forName(className);
+            Animal animal = (Animal) catClass.newInstance();
+            animal.eat("鱼");
+        }
+    }
