@@ -1,0 +1,29 @@
+package java15_20200520;
+ class Cat {
+     public String name;
+
+     public Cat(String name) {
+         this.name = name;
+     }
+
+     public void eat(String food) {
+         System.out.println(this.name + "正在吃" + food);
+     }
+ }
+    public class  TestReflect {
+        public static void main(String[] args) throws ClassNotFoundException {
+            //1，如何获取类对象
+            //通过字符串获取到类,参数是类的全限定类名
+            Class catClass1 = Class.forName("java15_20200520.Cat");
+
+            //2.通过实例来获取，实例的getClass方法获取到类对象
+            Cat cat = new Cat("小黑");
+            Class catClass2 = cat.getClass();
+
+            //得到的类对象在内从中只有一份，不管通过哪种方式获取到的类对象，本质上都是同一个对象
+            System.out.println(catClass1 == catClass2);
+           //3,通过类来获取
+            Class catClass3 = Cat.class;
+            System.out.println(catClass3 == catClass1);
+        }
+    }
