@@ -1,0 +1,24 @@
+import java.util.Arrays;
+
+enum Sex{     //当然也可以定义重新创建一个enum类，使用时创建类对象即可
+    //此处的MALE类型是Sex类型
+    MALE,
+    FEMALE,
+    OTHER,
+        }
+public class TestEnum {
+    public static void main(String[] args) {
+//        Sex sex = Sex.MALE;    //增强了代码的可读性
+//        if(sex == Sex.MALE){
+//         //对男性的操作
+//
+//        }
+        //测试values方法
+       // System.out.println(Arrays.toString(Sex.values()));
+        //测试valuesOf方法，
+        Sex sex = Sex.valueOf("MALE");  //将字符串MALE转换为枚举类型赋给sex
+        if(sex == Sex.MALE){
+            System.out.println("得到一个MALE类型的枚举常量");
+        }
+    }
+}
