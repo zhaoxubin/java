@@ -1,0 +1,48 @@
+
+public class Sington {
+    //饿汉模式，在类加载的时候，就创建对象
+    public static Sington SINGTON  = new Sington(); //类加载在
+
+    private Sington() {
+    }
+
+    public static Sington getInstance(){
+        return SINGTON;
+    }
+//懒汉式
+    public static Sington SINGTON2;
+    //省略了构造方法
+    //懒汉式的写法存在线程安全问题
+    //多行代码，并且存在需要分解的代码行 --》不具备原子性也不具备可见性
+    public static Sington getInstance2(){
+        if(SINGTON2 == null){
+            SINGTON2 = new Sington();
+        }
+        return SINGTON2;
+    }
+
+   //3, //懒汉式的线程安全写法
+
+    public static Sington SINGTON3;
+
+    public synchronized static Sington getInstance3(){
+        if(SINGTON3 == null)
+            SINGTON3 = new Sington();
+            return SINGTON3;
+    }
+
+
+    //双重校验锁的单例模式
+    public static Sington SINGTON4;
+
+    public synchronized static Sington getInstance4(){
+        if(SINGTON4 == null) {
+            synchronized (Sington.class) {
+                if (SINGTON4 == null) {
+                    SINGTON4 = new Sington();
+                }
+            }
+        }
+        return SINGTON4;
+    }
+}
