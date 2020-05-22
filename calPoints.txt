@@ -1,0 +1,18 @@
+class Solution {
+    public int calPoints(String[] ops) {
+        int res = 0； //总和
+        int tmp = 0; //阶段和
+        LinkedList<Integer>  list = new LinkedList<>();  //创建一个链表
+        for(String s : ops){  //遍历链表，匹配符号
+            switch(s){
+                case "+" : tmp = list.get(0) + list.get(1); break;
+                case "D" : tmp = 2 * list.peek(); break;
+                case "C" : res -= list.pop(); continue;
+                default : tmp = Integer.parseInt(s);
+            }
+            res += tmp;
+            list.push(tmp);
+        }
+        return res;
+    }
+}
