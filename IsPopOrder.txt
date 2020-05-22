@@ -1,0 +1,25 @@
+import java.util.ArrayList;
+import java.util.Stack;
+public class Solution {
+    public boolean IsPopOrder(int [] pushA,int [] popA) {
+      if(pushA.length == 0 || popA.length == 0){ //如果弹入或者弹出序列有一个为空
+          return false;
+      }
+        Stack<Integer> s = new Stack<>(); //用来组织弹入序列中的元素
+        int popIndex = 0; //用来标记该弹出的位置的元素在序列中的位置
+        for(int i = 0; i < pushA.length;i++){
+            //循环遍历弹入序列，依次放入栈s
+            s.push(pushA[i]);
+            while(!s.isEmpty() && s.peek() == popA[popIndex]){
+                //如果s栈不为空且此时栈顶元素等于弹出序列popIndex位
+                //此处循环是核心，判断是否为很多出栈顺序中的一个
+                //出栈
+                s.pop();
+                //pop位后移
+                popIndex++;
+            }
+        }
+        //循环结束，如果栈s为空，就说明是该入栈序列的的一个弹出序列
+        return s.isEmpty();
+    }
+}
