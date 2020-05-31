@@ -1,0 +1,52 @@
+import java.util.*;
+public class Finder {
+    public int findKth(int[] a, int n, int K) {
+        // write code here
+      quickSort(a);
+      return a[n-K];
+    }
+    public static  void quickSort(int[] array){
+        //借助这个方法进行辅助递归
+        //此处为了简单，代码写成前闭后闭区间
+        quickSortHelper(array,0,array.length-1);
+    }
+
+    private static void quickSortHelper(int[] array, int left, int right) {
+        if(left>=right){
+            return; //表示只有一个区间只有一个元素或者没有元素，直接返回
+        }
+        //针对[left,right]区间进行整理
+        //index位置即为整理完毕后left和right重合的位置，知道了这个位置才能进一步进行递归
+        int index = partition(array,left,right);
+        quickSortHelper(array,left,index-1);
+        quickSortHelper(array,index+1,right);
+    }
+
+    private static int partition(int[] array, int left, int right) {
+        int i = left;
+        int j = right;
+        int base = array[right];//取区间最后一位为基准值
+        while(i < j){
+            //从左往右找比基准值大的元素
+            while(i < j && array[i] <= base){
+                i++;
+            }
+            //当上面的循环结束之后，i要么和j重合，要么指向了一个比基准值base小大的元素
+            //从右往左找比基准值小的元素
+            while(i < j && array[j] >= base){
+                j--;
+            }
+            //当上面的循环结束之后，i要么和j重合，要么j指向了一个比基准值base小的元素
+            //交换i和j的值
+            swap(array,i,j);
+        }
+        //当i和j重合的时候，最后一步，把重合位置元素和基准值的交换
+        swap(array,i,right);
+        return i;
+    }
+    public static void swap(int[] array,int i, int j){
+        int temp = array[i];
+        array[i] = array[j];
+        array[j] = temp;
+    }
+}
