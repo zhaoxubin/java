@@ -1,0 +1,32 @@
+
+import java.util.Scanner;
+
+public class  FindLongNumSubstring{
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+       while (scanner.hasNext()){
+           String str = scanner.nextLine() ;
+           String temp = "";
+           for (char c : str.toCharArray()) {
+               if(c >= '0' && c <= '9'){
+                   temp += c;
+               }else{
+                   temp += "a";
+               }
+           }
+           String subStr[] = temp.split("a");
+           String result = "";
+           int i = 0;
+           int max = 0;
+          while (i < subStr.length){
+               int v1 = subStr[i].length();
+               if(v1 > max){
+                   max = v1;
+                   result = subStr[i];
+               }
+               i++;
+           }
+           System.out.println(result);
+       }
+    }
+}
