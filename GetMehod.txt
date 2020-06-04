@@ -1,0 +1,33 @@
+import java.util.Scanner;
+
+public class  GetMehod{
+    static int count = 0;
+    static int num;
+    static int[] bulk ;
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        while(scanner.hasNext()){
+            num = scanner.nextInt();
+            bulk = new int[num+1];
+            for (int i = 1; i <= num; i++) {
+                bulk[i] = scanner.nextInt();
+            }
+            methodFun(40,num);
+            System.out.println(count);
+        }
+    }
+
+    private static void methodFun(int a, int n) {
+        //如果容量a为0，表示刚好装满
+        if(a == 0){
+            count++;
+        }
+        //背包容量小于零或者容量大于零但是东西数量小于零，则不能刚好装满
+        if (a <= 0 || (a > 0 && n< 0))
+        {
+            return;
+        }
+        methodFun(a-bulk[n],n-1);
+        methodFun(a,n-1);
+    }
+}
