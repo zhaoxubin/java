@@ -1,0 +1,47 @@
+import java.util.Scanner;
+
+public class Candies {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+
+            int[] result = new int[4];
+            boolean t = false;
+            for (int i = 0; i < 4; i++) {
+                result[i] = scanner.nextInt();
+            }
+            for (int i = 0; i < result.length; i++) {
+                if(result[i] < -30 || result[i] > 30){
+                    System.out.print("No");
+                    t = true;
+                    break;
+                }
+            }
+            if(!t) {
+                questNum(result);
+            }
+
+    }
+    public static void questNum(int[] array){
+
+           int A,B,C;
+           A = (array[0]+array[2])/2;
+           if(A == 0){
+               C = array[2];
+           }else{
+               C = array[2] - A;
+           }
+           B = (array[1]+array[3])/2;
+            if(B == 0){
+                C = array[3];
+            }else{
+                C = array[3] - B;
+            }
+           if((A+B+C) == ((array[2]+array[3]+array[0]+array[3])/2)){
+               System.out.print(A+" ");
+               System.out.print(B+" ");
+               System.out.print(C);
+           }else {
+               System.out.print("No");
+           }
+    }
+}
