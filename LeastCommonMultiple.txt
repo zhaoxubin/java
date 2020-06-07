@@ -1,0 +1,22 @@
+import java.util.Scanner;
+
+public class LeastCommonMultiple {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        int A = scanner.nextInt();
+        int B = scanner.nextInt();
+        System.out.println(questLeastCommonMultiple(A,B));
+    }
+
+    private static int questLeastCommonMultiple(int a, int b) {
+         int biger = a>b? a : b;
+         int result = 0;
+        for (int i = biger; i <= a*b; i++) {
+            if(i % a == 0  && i % b == 0){
+                result = i;
+                break;
+            }
+        }
+        return result;
+    }
+}
