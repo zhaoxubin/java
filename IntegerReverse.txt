@@ -1,0 +1,12 @@
+import java.util.Scanner;
+
+public class IntegerReverse {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        int num = scanner.nextInt();
+        String str = String.valueOf(num);
+        StringBuffer result = new StringBuffer(str);
+        System.out.println(result.reverse());
+    }
+}
+
