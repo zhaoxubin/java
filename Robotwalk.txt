@@ -1,0 +1,27 @@
+import java.util.Scanner;
+
+public class RobotWalk{
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        int x = scanner.nextInt();
+        int y = scanner.nextInt();
+        int result = requestWays(x,y);
+        System.out.println(result);
+    }
+
+    private static int requestWays(int x, int y) {
+        int[][] array = new int [x+1][y+1];
+        for (int i = 1; i <= x ; i++) {
+            array[i][1] = 1;
+        }
+        for (int j = 1; j <= y; j++) {
+            array[1][j] = 1;
+        }
+        for (int i = 2; i <= x; i++) {
+            for (int j = 2; j <= y; j++) {
+                array[i][j] = array[i-1][j] + array[i][j-1];
+            }
+        }
+        return array[x][y];
+    }
+}
