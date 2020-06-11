@@ -1,0 +1,27 @@
+import java.util.Arrays;
+import java.util.Scanner;
+
+public class NumberPrintf{
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        String str = scanner.nextLine();
+        char[] ch = new char[str.length()];
+        for (int i = 0; i < ch.length; i++) {
+            ch[i] = str.charAt(i);
+        }
+        Arrays.sort(ch);
+        int count = 0;
+        int index = 0 ;
+        while(index < ch.length){
+            count = 0;
+            char c = ch[index];
+            for (int i = index; i < ch.length; i++) {
+                if(c == ch[i]){
+                    count++;
+                    index++;
+                }
+            }
+            System.out.println(c + ":"+count);
+        }
+    }
+}
