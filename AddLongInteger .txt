@@ -1,0 +1,43 @@
+import java.util.Scanner;
+
+public class AddLongInteger {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        while(scanner.hasNext()){
+            String str1 = scanner.next();
+            String str2 = scanner.next();
+            String result = addLongIanteger(str1,str2);
+            System.out.println(result);
+        }
+    }
+
+   private static String addLongIanteger(String addend, String augend) {
+       char[] chars1 = new StringBuilder(addend).reverse().toString().toCharArray();
+       char[] chars2 = new StringBuilder(augend).reverse().toString().toCharArray();
+       int length = chars1.length > chars2.length ? chars1.length+1 : chars2.length+1;
+       int[] res = new int[length];
+       for (int i = 0; i < length; i++) {
+           int tmp = res[i];
+           if(i < chars1.length){
+               tmp += chars1[i] - '0';
+           }
+           if(i < chars2.length){
+               tmp += chars2[i] - '0';
+           }
+           if(tmp > 9){
+               tmp -= 10;
+               res[i+1] = 1;
+           }
+           res[i] = tmp;
+       }
+        StringBuilder sb = new StringBuilder();
+       int head = length-1;
+       if(res[length-1] == 0){
+           head = res.length-2;
+       }
+       for (int j = head; j >=0 ; j--) {
+           sb.append(res[j]);
+       }
+       return sb.toString();
+    }
+}
