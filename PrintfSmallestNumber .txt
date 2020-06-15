@@ -1,0 +1,41 @@
+import java.util.Scanner;
+
+public class PrintfSmallestNumber {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        while(scanner.hasNext()) {
+            String str = scanner.nextLine();
+            String[] ch = str.split(" ");
+            String result = printfSmallestNumber(ch);
+            System.out.println(result);
+        }
+    }
+
+    private static String printfSmallestNumber(String[] ch) {
+        StringBuilder sb = new StringBuilder();
+        for (int i = 1; i < ch.length; i++) {
+            int n = Integer.parseInt(ch[i]);
+            if (n > 0) {
+                for (int j = 0; j < n; j++) {
+                    sb.append(String.valueOf(i));
+                }
+            }
+        }
+        int index = 0;
+        for (int k = 1; k < ch.length; k++) {
+            int n = Integer.parseInt(ch[k]);
+            if (n > 0) {
+               index = k;
+               break;
+            }
+        }
+
+        int n2 = Integer.parseInt(ch[0]);
+        if (n2 > 0) {
+            for (int i = 0; i < n2; i++) {
+                sb.insert(1,String.valueOf(0));
+            }
+        }
+        return sb.toString();
+    }
+ }
