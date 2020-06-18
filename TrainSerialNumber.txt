@@ -1,0 +1,71 @@
+import java.util.*;
+
+public class TrainSerialNumber {
+    static LinkedList<int[]> list = new LinkedList<>();
+    static LinkedList<String> list1 = new LinkedList<>();
+
+    public static void swap(int[] array, int i, int j) {
+        int temp = array[i];
+        array[i] = array[j];
+        array[j] = temp;
+    }
+    
+    public static void transAll(int[] array, int start, int end) {
+        if (start == end) {
+            int[] temp = array.clone();
+            list.add(temp);
+            return;
+        }
+        for (int i = start; i <= end; i++) {
+            swap(array, i, start);
+            transAll(array, start + 1, end);
+            swap(array, i, start);
+        }
+    }
+
+    //判断
+    public static boolean panduan(int[] array1, int[] array2) {
+        Stack<Integer> stack = new Stack<>();
+        int j = 0;
+        for (int i = 0; i < array1.length; i++) {
+            stack.push(array1[i]);
+            while (!stack.isEmpty() && stack.peek() == array2[j]) {
+                stack.pop();
+                j++;
+            }
+        }
+        return stack.isEmpty();
+    }
+
+    //转化成String
+    public static String transforString(int[] array) {
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < array.length; i++) {
+            sb.append(array[i]);
+            if (i != array.length - 1)
+                sb.append(" ");
+        }
+        return sb.toString();
+    }
+
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        while (sc.hasNextInt()) {
+            int n = sc.nextInt();
+            int[] array = new int[n];
+            for (int i = 0; i < n; i++) {
+                array[i] = sc.nextInt();
+            }
+            transAll(array, 0, array.length - 1);
+            for (int[] num : list) {
+                if (panduan(array, num) == true) {
+                    list1.add(transforString(num));
+                }
+            }
+            Collections.sort(list1);
+            for (String s : list1)
+                System.out.println(s);
+        }
+    }
+}
+
