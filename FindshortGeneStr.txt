@@ -1,0 +1,46 @@
+package java15_20200619;
+
+import java.util.Scanner;
+
+public class FindshortGeneStr {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        while(scanner.hasNext()) {
+            String geneStr = scanner.nextLine();
+            int length = scanner.nextInt();
+            System.out.println(findshortGeneStr(geneStr, length));
+        }
+    }
+
+    private static String findshortGeneStr(String geneStr, int length) {
+        int index= 0;
+        int count = 0;
+        int sign = 0;
+        StringBuffer sb = new StringBuffer();
+        while(index <= geneStr.length()-length){
+            int cur = countFun(geneStr,index,length);
+            if(cur > count){
+                count = cur;
+                sign = index;
+            }
+            index++;
+        }
+        for (int i = sign; i < sign+length; i++) {
+            sb.append(String.valueOf(geneStr.charAt(i)));
+        }
+        return sb.toString();
+    }
+
+    private static int countFun(String str,int index,int lendth) {
+        int count = 0;
+        for (int i = index; i < index+lendth; i++) {
+            if(str.charAt(i) == 'G'){
+                count++;
+            }
+            if(str.charAt(i) == 'C'){
+                count++;
+            }
+        }
+        return count;
+    }
+}
