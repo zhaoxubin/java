@@ -1,0 +1,37 @@
+
+class ListNode{
+    int value;
+    ListNode next = null;
+
+    public ListNode(int value) {
+        this.value = value;
+    }
+}
+
+public class LinkeListSplitByX {
+    public ListNode partition(ListNode pHead, int x) {
+        // write code here
+        if(pHead == null){
+            return null;
+        }
+        if(pHead.next == null ){
+            return pHead;
+        }
+        ListNode bigHead = new ListNode(-1);
+        ListNode bigTail = bigHead;
+        ListNode smallHead = new ListNode(-1);
+        ListNode smallTail = smallHead;
+        for(ListNode cur = pHead; cur != null; cur = cur.next ){
+            if(cur.value < x){
+                smallTail.next = new ListNode(cur.value);
+                smallTail = smallTail.next;
+            }else{
+                bigTail.next = new ListNode(cur.value);
+                bigTail = bigTail.next;
+            }
+
+        }
+        smallTail.next = bigHead.next;
+        return smallHead.next;
+    }
+}
