@@ -1,0 +1,18 @@
+import java.util.Scanner;
+
+public class GetTotalCount {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        int Month = scanner.nextInt();
+        System.out.println(getTotalCount(Month));
+    }
+
+
+    public static int getTotalCount(int monthCount){
+        if(monthCount == 1 || monthCount == 2 || monthCount == 0 ){
+            return  1;
+        }
+        return getTotalCount(monthCount-2)+getTotalCount(monthCount-1);
+    }
+
+}
