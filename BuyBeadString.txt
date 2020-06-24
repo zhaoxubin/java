@@ -1,0 +1,31 @@
+import java.io.*;
+
+public class BuyBeadString{
+
+	public static void main(String[] args) throws IOException{
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		PrintWriter out = new PrintWriter(new OutputStreamWriter(System.out));
+		StringBuffer a = new StringBuffer(br.readLine());     //卖家的珠子
+		String  b = br.readLine();   													//买家需要的珠子
+		
+		StringBuffer b1 = new StringBuffer("");   						 //买家买到的珠子
+		
+		for (int i = 0; i < b.length(); i++) {
+			for (int j = 0; j < a.length(); j++) {
+				if (b.charAt(i) == a.charAt(j)) {
+					a.deleteCharAt(j);  									// 从原卖家字符串删去珠子
+					b1.append(b.charAt(i));						  //买家买到的珠子
+					break;
+				}
+			}
+		}
+		if(b1.length() == b.length()) {
+			out.println("Yes " + a.length());
+			out.flush();
+		}else {
+			out.println("No " + (b.length() - b1.length()));
+			out.flush();
+		}
+	}
+
+}
