@@ -1,0 +1,43 @@
+
+import java.util.Scanner;
+
+public class BeatBeats {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        while(scanner.hasNext()){
+            int[] nums = new int[2];
+            for (int i = 0; i < nums.length; i++) {
+                nums[i] = scanner.nextInt();
+            }
+            int[] arr = new int[nums[0]];
+            for (int i = 0; i < arr.length; i++) {
+                arr[i] = scanner.nextInt();
+            }
+            finallyCapacity(nums,arr);
+        }
+    }
+
+    private static void finallyCapacity(int[] nums, int[] arr) {
+        int c = nums[1];
+        for (int i = 0; i < nums[0]; i++) {
+            if(arr[i] <= c){
+                c += arr[i];
+            }else{
+                c += greComDiv(c,arr[i]);
+            }
+        }
+        System.out.println(c);
+    }
+
+    private static int greComDiv(int c, int p) {
+        int ret = c > p ? p : c;
+        int result = 0;
+        for(int i = p; i > 0; i--){
+            if(c%i == 0 && p%i == 0){
+                result = i;
+                break;
+            }
+        }
+        return result;
+    }
+}
