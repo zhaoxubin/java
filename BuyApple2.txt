@@ -1,0 +1,35 @@
+import java.util.Scanner;
+public class BuyApple{
+    public static void main(String[] args) {
+        Scanner sc=new Scanner(System.in);
+        int n=sc.nextInt();
+        if(n<6){            //小于6不够一袋，返回-1
+            System.out.println(-1);
+        }else {
+        for(int i=0;i<17;i++){      //题目规定1<n<100,所以买6个的对多16袋
+            if(6*i<n){  //循环取6的倍数，再判断剩下的（总数减去6*i）是否位整除8即可
+                if((n-6*i)%8==0){
+                    int j=(n-6*i)/8;
+                    int sum=i+j;
+                    System.out.println(sum);
+                    break;
+                }
+ 
+ 
+                else {
+                    continue;
+                }
+            }else if(6*i==n){  //如果取不到整除8的再看看，是不是6的倍数，（不求是不是8的倍数，是因为上面判断过了）如果是，就输出，不是就输出-1
+                System.out.println(i);
+                break;
+            }
+            else{
+                System.out.println(-1);
+                break;
+              }
+ 
+           }
+        }
+ 
+    }
+}
