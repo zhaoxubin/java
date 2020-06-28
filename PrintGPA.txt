@@ -1,0 +1,68 @@
+import java.util.Scanner;
+
+public class PrintGPA {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        int n = scanner.nextInt();
+        int[] credit = new int[n];
+        int[] score = new int[n];
+        for (int i = 0; i < n; i++) {
+            credit[i] = scanner.nextInt();
+        }
+        for (int j = 0; j < n; j++) {
+            score[j] = scanner.nextInt();
+        }
+        float  sGpa = singleGPA(n,score,credit);
+        float couCredit = countCredit(n,credit);
+        float result = sGpa/couCredit;
+        System.out.println(sGpa);
+        System.out.println(couCredit);
+        System.out.format("%.2f",result);
+    }
+
+    private static float countCredit(int n, int[] credit) {
+       float count = 0;
+        for (int i = 0; i < n; i++) {
+            count += credit[i];
+        }
+        return count;
+    }
+
+    private static float singleGPA(int n, int[] score,int[] credit) {
+        float gpa = 0;
+        for (int i = 0; i < n; i++) {
+            double ret = credit[i];
+         if(score[i]>= 90 && score[i] <= 100){
+             gpa += (((float)4.0)*ret);
+         }
+         if(score[i]>= 85 && score[i] <= 89){
+             gpa += (((float)3.7)*ret);
+         }
+         if(score[i]>= 82 && score[i] <= 84){
+                gpa += (((float)3.3)*ret);
+         }
+         if(score[i]>= 78 && score[i] <= 81){
+                gpa += (((float)3.0)*ret);
+         }
+         if(score[i]>= 75 && score[i] <= 77){
+                gpa += (((float) 2.7)*ret);
+         }
+         if(score[i]>= 72 && score[i] <= 74){
+                gpa += (((float)2.3)*ret);
+         }
+         if(score[i]>= 68 && score[i] <= 71){
+                gpa += (((float)2.0)*ret);
+         }
+         if(score[i]>= 64 && score[i] <= 67){
+                gpa += (((float)1.5)*ret);
+         }
+         if(score[i]>= 60 && score[i] <= 63){
+                gpa += (((float)1.0)*ret);
+         }
+         if(score[i] < 60 ){
+                gpa += (((float)0.1)*ret);
+         }
+        }
+        return gpa;
+    }
+}
