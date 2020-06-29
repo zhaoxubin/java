@@ -1,0 +1,36 @@
+
+
+import java.util.Scanner;
+
+public class PrintVote {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        int candidateNums = scanner.nextInt();
+        char[] caNum = new char[candidateNums];
+        for (int i = 0; i < candidateNums; i++) {
+            caNum[i] = scanner.next().charAt(0);
+        }
+        int  voteNums  = scanner.nextInt();
+        char[] voteN = new char[voteNums];
+        for (int j = 0; j < voteNums; j++) {
+            voteN[j] = scanner.next().charAt(0);
+        }
+        printVote(candidateNums,caNum,voteNums,voteN);
+    }
+
+    private static void printVote(int candidateNums, char[] caNum, int voteNums, char[] voteN) {
+        int count = 0;
+        for (int i = 0; i < candidateNums; i++) {
+            int result = 0;
+            for (int j = 0; j < voteNums; j++) {
+                if(caNum[i] == voteN[j]){
+                    result++;
+                }
+            }
+            count += result;
+            System.out.println(caNum[i] + " " + ":" + " " + result);
+        }
+        int invalid = voteNums - count;
+        System.out.print("Invalid"+" "+":"+" "+invalid);
+    }
+}
