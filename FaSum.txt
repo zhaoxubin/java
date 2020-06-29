@@ -1,0 +1,33 @@
+
+import java.util.Scanner;
+
+public class FaSum {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        while(scanner.hasNext()){
+            int n = scanner.nextInt();
+            System.out.print(sumEveryDigit(n));
+            System.out.print(" ");
+            System.out.print(sumEveryQuaDigit(n));
+        }
+    }
+    private static int sumEveryDigit(int n) {
+        int result = 0;
+        while(n != 0){
+            int a = n%10;
+            n /= 10;
+            result+=a;
+        }
+        return result;
+    }
+    private static int sumEveryQuaDigit(int n) {
+       int ret = n*n;
+        int result = 0;
+        while(ret != 0){
+            int a = ret%10;
+            ret /= 10;
+            result+=a;
+        }
+        return result;
+    }
+}
