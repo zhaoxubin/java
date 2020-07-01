@@ -1,0 +1,102 @@
+
+import java.util.Scanner;
+import java.util.Stack;
+
+public class IPTransform {
+    public static void main(String[] args) {
+         Scanner scanner = new Scanner(System.in);
+         String ip = scanner.next();
+         String[] str = ip.split("\\.");
+         int num = scanner.nextInt();
+         dec(str); //求IP--》》》十进制
+         ReqIP(num); //求十进制-》》》IP
+    }
+
+    //将十进制转换为IP,先转为二进制，再转IP;
+    private static void ReqIP(int num) {
+        StringBuffer sb5 = new StringBuffer();
+        String sb3 = new String(binary2(num));
+        String[] st = sb3.split("\\.");
+        for (int i = 0; i < st.length; i++) {
+             sb5.append(reqDec(st[i]));
+             if(i < st.length-1){
+                 sb5.append('.');
+             }
+        }
+        System.out.println(sb5.toString());
+    }
+
+    private static String binary2(int num) {
+        StringBuffer sb4 = new StringBuffer();
+        Stack<Integer> stack = new Stack<>();
+        while (num >= 1){
+            int a = num%2;
+            num /= 2;
+            stack.push(a);
+        }
+        int cur = stack.size();
+        int cur2 = 32 -cur;
+        for (int i = 0; i < cur2; i++) {
+            stack.push(0);
+        }
+        int co = 0;
+        while (!stack.empty()){
+            int re = stack.pop();
+            sb4.append(re);
+            co++;
+            if(co == 8){
+                sb4.append('.');
+                co = 0;
+            }
+        }
+        sb4.deleteCharAt(35);
+        return sb4.toString();
+    }
+
+    //将ip转化为十进制  /先将ip转二进制序列再转十进制
+    private static void dec(String[] str) {
+        StringBuffer sb = new StringBuffer();
+        int result = 0;
+        for (int i = 0; i < str.length; i++) {
+            int ret = Integer.parseInt(str[i]);
+             String s = binary(ret);
+             sb.append(s);
+        }
+           result = reqDec(sb.toString());
+           System.out.println(result);
+    }
+//二进制转十进制
+    private static int reqDec(String str){
+        int result = 0;
+        int ai = 0;
+        for (int i = str.length()-1; i >=0; i--) {
+            int index = str.charAt(i) - '0';
+            result += (int)Math.pow(2,ai)*index;
+            ai++;
+        }
+        return result;
+    }
+
+
+    //求二进制序列
+    private static String binary(int ret) {
+        StringBuffer sb2 = new StringBuffer();
+        Stack<Integer> stack = new Stack<>();
+        while (ret >= 1){
+            int a = ret%2;
+            ret /= 2;
+            stack.push(a);
+        }
+        int cur = stack.size();
+        int cur2 = 8 -cur;
+        for (int i = 0; i < cur2; i++) {
+            stack.push(0);
+        }
+        while (!stack.empty()){
+             int re = stack.pop();
+             sb2.append(re);
+        }
+        return sb2.toString();
+    }
+
+}
