@@ -1,0 +1,25 @@
+
+
+public class CountNumberOf2 {
+    public static void main(String[] args) {
+        System.out.println(countNumberOf2s(10));
+    }
+    public static int countNumberOf2s(int n) {
+        int count = 0;
+        for (int i = 2; i <= n; i++) {
+           count += numsOf2(i);
+        }
+        return count;
+    }
+
+    private static int numsOf2(int i) {
+        int count = 0;
+        while (i > 0){
+            if(i%10 == 2){
+                count++;
+            }
+            i /= 10;
+        }
+        return count;
+    }
+}
