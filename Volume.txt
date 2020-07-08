@@ -1,0 +1,12 @@
+import java.util.Scanner;              
+public class Volume{                        
+    public static void main(String args[]){             
+        Scanner s=new Scanner(System.in);
+        System.out.println("请输入要求体积的圆球的半径r");          /
+        double r=s.nextDouble();       
+        double v;              
+        v=4*Math.PI*Math.pow(r,3)/3;       
+        System.out.println("求得圆球的体积为"+v);      
+          
+    }
+}
