@@ -1,0 +1,36 @@
+
+import java.util.Scanner;
+
+public class AboutGlobe {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        while (scanner.hasNext()){
+            String str = scanner.nextLine();
+            String[] s = str.split(" ");
+            double radius = ToRequestRadius(s);
+            double Volume = ToRequestVolume(radius,s);
+            System.out.print(String.format("%.3f",radius));
+            System.out.print(" ");
+            System.out.print(String.format("%.3f",Volume));
+        }
+    }
+
+    private static double ToRequestVolume(double radius,String[] s) {
+         double PI = Math.acos(-1);
+         double volume = 4*PI*Math.pow(radius,3)/3;
+         return volume;
+    }
+
+    private static double ToRequestRadius(String[] s) {
+        int[] num = new int[s.length];
+        for (int i = 0; i < s.length; i++) {
+            num[i] =Integer.parseInt(s[i]);
+        }
+        int x1 = num[3]- num[0];
+        int x2 = num[4]- num[1];
+        int x3 = num[5]-num[2];
+        double res = Math.pow(x1,2)+Math.pow(x2,2)+Math.pow(x3,2);
+        double result = Math.sqrt(res);
+        return result;
+    }
+}
