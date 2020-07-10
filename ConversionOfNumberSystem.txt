@@ -1,0 +1,32 @@
+import java.util.*;
+public class ConversionOfNumberSystem{
+public static void main(String[] args){
+   Scanner scan = new Scanner(System.in);
+   while(scan.hasNext()){
+      String str = scan.next();
+      conversionOfNumberSystem(str);
+   }
+ }
+    public static void conversionOfNumberSystem(String s){
+        Map<Character,Integer> map = new HashMap<>();
+        int x = 0;
+        for(char i = '0'; i <= '9'; i++){
+            map.put(i,x);
+            x++;
+        }
+        map.put('A',10);
+        map.put('B',11);
+        map.put('C',12);
+        map.put('D',13);
+        map.put('E',14);
+        map.put('F',15);
+       int result = 0;
+       int index = 0;
+       for(int j = s.length()-1; j > 1; j--){
+           int ret = map.get(s.charAt(j));
+           result += ret * (int)Math.pow(16,index);
+           index++;
+       }
+       System.out.println(result);
+    }
+}
