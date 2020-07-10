@@ -1,0 +1,30 @@
+import java.util.*;
+public class CountCapital{
+public static void main(String[] args){
+    Scanner scan = new Scanner(System.in);
+    while(scan.hasNext()){
+        String str = scan.next();
+        countCapital(str);
+    }
+}
+    public static void countCapital(String s){
+        Map<Character,Integer> map = new HashMap<>();
+         for (char j = 'A'; j <= 'Z'; j++) {
+            map.put(j,0);
+        }
+        for(int i = 0 ; i < s.length(); i++){
+            char ret = s.charAt(i);
+            if(ret >= 'A' && ret <= 'Z'){
+            Integer c = map.get(ret);
+            if(c == 0){
+                map.put(ret,1);
+            }else{
+                map.put(ret,c+1);
+            }
+          }
+        }
+        for(Map.Entry<Character,Integer> entry : map.entrySet()){
+            System.out.println(entry.getKey()+":"+entry.getValue());
+        }
+    }
+}
