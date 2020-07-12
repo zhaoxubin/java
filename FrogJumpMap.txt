@@ -1,0 +1,69 @@
+import java.util.Iterator;
+import java.util.LinkedList;
+import java.util.Scanner;
+
+public class FrogJumpMap {
+    public static void main(String[] args) {
+        int n,m,p;
+        Scanner input=new Scanner(System.in);
+        while(input.hasNextInt()) {
+            n = input.nextInt();
+            m = input.nextInt();
+            p = input.nextInt();
+            int[][] lab = new int[n][m];
+            for (int i = 0; i < n; i++) {
+                for (int j = 0; j < m; j++) {
+                    lab[i][j] = input.nextInt();
+                }
+            }
+            recursion(lab,n,m,p,0,0);
+            if(isFind){
+                System.out.println(sb.toString());
+            }else{
+                System.out.println("can not escape");
+            }
+        }
+    }
+    static LinkedList<LinkedList<Integer>> path=new LinkedList<LinkedList<Integer>>();
+    static boolean isFind=false;
+    static int maxRemainPower=0;
+    static StringBuilder sb=new StringBuilder();
+
+    public static void recursion(int[][] map,int rows,int cols,int power,int i,int j){
+        if(i<0||i>=rows||j<0||j>=cols||map[i][j]==0||power<0){
+            return;
+        }else{
+            LinkedList<Integer> tmp=new LinkedList<Integer>();
+            tmp.add(i);
+            tmp.add(j);
+            path.add(tmp);
+            map[i][j]=0;
+            if(i==0&&j==cols-1){
+                if(power>=maxRemainPower){
+                    maxRemainPower=power;
+                    updatePath(path);
+                }
+                isFind=true;
+                map[i][j]=1;
+                path.removeLast();
+                return;
+            }
+            recursion(map,rows,cols,power-3,i-1,j);
+            recursion(map,rows,cols,power-1,i,j+1);
+            recursion(map,rows,cols,power,i+1,j);
+            recursion(map,rows,cols,power-1,i,j-1);
+            map[i][j]=1;
+            path.removeLast();
+        }
+    }
+    public static void updatePath(LinkedList<LinkedList<Integer>> list){
+        Iterator<LinkedList<Integer>> iterator=list.iterator();
+        while(iterator.hasNext()){
+            LinkedList<Integer> tmp=iterator.next();
+            sb.append("["+tmp.get(0)+","+tmp.get(1)+"]"+",");
+        }
+        if(sb.length()>0){
+            sb.deleteCharAt(sb.length()-1);
+        }
+    }
+}
