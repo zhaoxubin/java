@@ -1,0 +1,21 @@
+import java.util.*;
+public class StrDeleteContainsStr2{
+  public static void main(String[] args){
+    Scanner scanner = new Scanner(System.in);
+      while(scanner.hasNext()){
+        String str = scanner.nextLine();
+        String str2 = scanner.nextLine();
+        Set<Character> set = new HashSet<>();
+        for(int i = 0; i < str2.length(); i++){
+            set.add(str2.charAt(i));
+        }
+        StringBuilder sb = new StringBuilder();
+         for(int j = 0; j < str.length();j++){
+            if(!set.contains(str.charAt(j))){
+               sb.append(str.charAt(j));
+            }
+         }
+      System.out.println(sb.toString());
+      }
+    }    
+  }
