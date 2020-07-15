@@ -1,0 +1,21 @@
+import java.util.*;
+public class ReverseEnglishSentenceAsWords{
+ public static void main(String[] args){
+     Scanner scanner = new Scanner(System.in);
+     while(scanner.hasNext()){
+         String str = scanner.nextLine();
+         reverse(str);
+     }
+  }
+    public static void reverse(String str){
+        String[] ret = str.split(" ");
+        StringBuilder sb = new StringBuilder();
+        for(int i = ret.length-1; i >= 0; i--){
+            sb.append(ret[i]);
+            if(i !=0 ){
+                sb.append(" ");
+            }
+        }
+        System.out.println(sb.toString());
+    }
+}
