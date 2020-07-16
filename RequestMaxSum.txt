@@ -1,0 +1,27 @@
+import java.util.*;
+public class RequestMaxSum{
+    public static void main(String[] args){
+        Scanner scanner = new Scanner(System.in);
+        int n = scanner.nextInt();
+        int[] data = new int[n];
+        for(int i = 0; i < data.length; i++){
+            data[i] = scanner.nextInt();
+        }
+        requestMaxSum(n,data);
+    }
+    public static void requestMaxSum(int n,int[] data){
+        if(n == 0){
+            System.out.println(0);
+        }else{
+          int maxSum = -1111111111;
+        for(int i = 0; i < n; i++){
+          int sum = 0;
+        for(int j = i; j < n; j++){
+            sum += data[j];
+            maxSum = maxSum > sum ? maxSum : sum;
+        }
+      }
+     System.out.println(maxSum);
+        }
+    }
+}
