@@ -1,0 +1,29 @@
+import java.util.*;
+public class TypeTransition{
+    public static void main(String[] args){
+        Scanner scan = new Scanner(System.in);
+        while(scan.hasNext()){
+            String  str =  scan.nextLine();
+            typeTransition(str);
+        }
+    }
+    public static void typeTransition(String s){
+        StringBuilder sb = new StringBuilder();
+        String[] ret = s.split("_");
+        for(int i = 0;i < ret.length;i++){
+            if(i == 0){
+                sb.append(ret[i]);
+            }else{
+                sb.append(funChange(ret[i]));
+            }
+        }
+        System.out.println(sb.toString());
+    }
+    public static String funChange(String s2){
+        String c = String.valueOf(s2.charAt(0)).toUpperCase();
+        StringBuilder sb2 = new StringBuilder(s2);
+        sb2.deleteCharAt(0);
+        sb2.insert(0,c);
+        return sb2.toString();
+    }
+}
