@@ -1,0 +1,53 @@
+
+
+import java.util.*;
+public class JudgeExit{
+    public static void main(String[] args){
+        Scanner scan = new Scanner(System.in);
+        while(scan.hasNext()){
+            String strA = scan.next();
+            String strB = scan.next();
+            judgeExit(strA,strB);
+        }
+    }
+    public static void judgeExit(String s1,String s2){
+        Map<Character,Integer> map = new HashMap<>();
+        for(int i = 0; i < s1.length(); i++){
+            char c = s1.charAt(i);
+            if(map.containsKey(c)){
+                int count = map.get(c);
+                    map.put(c,count+1);
+            }else{
+                map.put(c,1);
+            }
+        }
+        boolean result = true;
+        for(int j = 0; j < s2.length(); j++){
+            char r = s2.charAt(j);
+            if(map.containsKey(r)){
+                int num = count(s2,r);
+                if(map.get(r) < num){
+                    result = false;
+                    break;
+                }
+            }else{
+                result = false;
+                break;
+            }
+        }
+        if(result == true){
+            System.out.println("Yes");
+        }else{
+            System.out.println("No");
+        }
+    }
+    public static int count(String s3,char r){
+        int num = 0;
+        for(int k = 0; k < s3.length(); k++){
+            if(s3.charAt(k) == r){
+                num++;
+            }
+        }
+        return num;
+    }
+}
