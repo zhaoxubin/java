@@ -1,0 +1,70 @@
+输入字典单词个数，接着输入每个单词，接着输入要查找的单词（存在字典中），接着该输入单词所在位置，输出查找单词的兄弟单词（兄弟单词是除过自身，以外的其他组合）
+import java.util.*;
+public class FindBrotherWorld{
+    public static void main(String[] args){
+        Scanner scan = new Scanner(System.in);
+        while(scan.hasNext()){
+            int n1 = scan.nextInt();
+            String[] str = new String[n1];
+            for(int i = 0; i < n1; i++){
+                str[i] = scan.next();
+            }
+            String world = scan.next();
+            int n2 = scan.nextInt();
+            findBrotherWorld(n1,str,world,n2);
+        }
+    }
+    public static void findBrotherWorld(int n1,String[] str,String world,int n2){
+        int count = 0;
+        int k = 0;
+        for(int i = 0; i < n1; i++){
+            if(i != n2-1){
+                if( isBrother(str[i],world)){
+                    count++;
+                }
+            }
+        }
+        System.out.println(count);
+
+    }
+    public static boolean isBrother(String A,String B){
+        boolean result = true;
+        if(A.equals(B)){
+            result = false;
+        }else{
+            Map<Character,Integer> map = new HashMap<>();
+            for(int i = 0; i < A.length(); i++){
+                char c = A.charAt(i);
+                if(map.containsKey(c)){
+                    int count = map.get(c);
+                    map.put(c,count+1);
+                }else{
+                    map.put(c,1);
+                }
+            }
+            for(int j = 0; j < B.length(); j++){
+                char r = B.charAt(j);
+                if(map.containsKey(r)){
+                    int num = count(B,r);
+                    if(map.get(r) != num){
+                        result = false;
+                        break;
+                    }
+                }else{
+                    result = false;
+                    break;
+                }
+            }
+        }
+        return result;
+    }
+    public static int count(String s3,char r){
+        int num = 0;
+        for(int k = 0; k < s3.length(); k++){
+            if(s3.charAt(k) == r){
+                num++;
+            }
+        }
+        return num;
+    }
+}
