@@ -1,0 +1,43 @@
+
+
+
+
+解决思路1：定义三指针，挨个翻转链表
+public class Solution {
+    public ListNode ReverseList(ListNode head) {
+       if(head == null || head.next == null){
+           return head;
+       }
+        ListNode pre = head;
+        ListNode mid = pre.next;
+        ListNode last = mid.next;
+        while(last != null){
+            mid.next = pre;
+            pre = mid;
+            mid = last;
+            last = last.next;
+        }
+        mid.next = pre;
+        head.next = null;
+        head = mid;
+        return head;
+    }
+}
+
+解决思路2：逐个消除，头插实现翻转
+public class Solution {
+    public ListNode ReverseList(ListNode head) {
+       if(head == null || head.next == null){
+           return head;
+       }
+       ListNode newHead = null;
+        while(head != null){
+            ListNode p = head;
+            head = head.next;
+            p.next = newHead;
+            newHead = p;
+        }
+        head = newHead;
+        return head;
+    }
+}
