@@ -1,0 +1,29 @@
+
+
+import java.util.Stack;
+
+public class Solution {
+   Stack<Integer> priStatic = new Stack<>();
+   Stack<Integer> minStatic = new Stack<>();
+    public void push(int node) {
+        if(minStatic.empty() || node < minStatic.peek()){
+            minStatic.push(node);
+        }else{
+            minStatic.push(minStatic.peek());
+        }
+        priStatic.push(node);
+    }
+    
+    public void pop() {
+        priStatic.pop();
+        minStatic.pop();
+    }
+    
+    public int top() {
+        return priStatic.peek();
+    }
+    
+    public int min() {
+        return minStatic.peek();
+    }
+}
