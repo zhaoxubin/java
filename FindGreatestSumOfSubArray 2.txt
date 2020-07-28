@@ -1,0 +1,18 @@
+解决思路（优化） ：解决动态规划中的复杂度高问题
+public class Solution {
+    public int FindGreatestSumOfSubArray(int[] array) {
+        int target = array[0];
+        int maxValue = array[0];
+        for(int i = 1; i < array.length; i++){
+            if(target > 0){
+                target += array[i];
+            }else{
+                target = array[i];
+            }
+            if(target > maxValue){
+                maxValue = target;
+            }
+        }
+        return maxValue;
+    }
+}
