@@ -1,0 +1,34 @@
+/**
+public class TreeNode {
+    int val = 0;
+    TreeNode left = null;
+    TreeNode right = null;
+
+    public TreeNode(int val) {
+        this.val = val;
+
+    }
+
+}
+*/
+public class Solution {
+    private int max = 0;
+    public void TreeDepthHelper(TreeNode root,int cur){
+        if(root == null){
+            if(max < cur){
+                max = cur;
+            }
+            return;
+        }
+        TreeDepthHelper(root.left,cur+1);
+        TreeDepthHelper(root.right,cur+1);
+    }
+    public int TreeDepth(TreeNode root) {
+        if(root == null){
+            return 0;
+        }
+        int cur = 0;
+        TreeDepthHelper(root,cur);
+        return max;
+    }
+}
