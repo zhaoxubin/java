@@ -1,0 +1,46 @@
+/*
+public class ListNode {
+    int val;
+    ListNode next = null;
+
+    ListNode(int val) {
+        this.val = val;
+    }
+}*/
+public class Solution {
+    public ListNode FindFirstCommonNode(ListNode pHead1, ListNode pHead2) {
+        if(pHead1 == null || pHead2 == null){
+            return null;
+        }
+        int pHead1Length = getLength(pHead1);
+        int pHead2Length = getLength(pHead2);
+        int steap = Math.abs(pHead1Length - pHead2Length);
+        if(pHead1Length > pHead2Length){
+            while(steap > 0){
+                pHead1 = pHead1.next;
+                steap--;
+            }
+        }else{
+            while(steap > 0){
+                pHead2 = pHead2.next;
+                steap--;
+            }
+        }
+        while(pHead1 != null && pHead2 != null){
+            if(pHead1.val == pHead2.val){
+                return pHead1;
+            }
+            pHead1 = pHead1.next;
+            pHead2 = pHead2.next;
+        }
+        return null;
+    }
+    public static int getLength(ListNode head){
+        int length = 0;
+        while(head != null){
+            head = head.next;
+            length++;
+        }
+        return length;
+    }
+}
