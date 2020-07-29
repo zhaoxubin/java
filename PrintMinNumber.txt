@@ -1,0 +1,27 @@
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+public class Solution {
+    public String PrintMinNumber(int [] numbers) {
+        if(numbers == null){
+            return new String();
+        }
+        ArrayList<Integer> list = new ArrayList<>();
+        for(int i = 0; i < numbers.length; i++){
+            list.add(numbers[i]);
+        }
+        Collections.sort(list,new Comparator<Integer>(){
+           @Override
+            public int compare(Integer x, Integer y){
+                String xs = x + "" +y;
+                String ys = y + "" +x;
+                return xs.compareTo(ys);
+            }
+        });
+        String result = "";
+        for(Integer e : list){
+            result += e;
+        }
+        return result;
+    }
+}
