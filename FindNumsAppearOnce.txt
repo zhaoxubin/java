@@ -1,0 +1,29 @@
+ public class Solution {   
+  public void FindNumsAppearOnce(int [] array,int num1[] , int num2[]) {     
+          if(array == null || num1 == null || num2 == null){       
+              return;     
+           }       
+        num1[0] = 0;       
+        num2[0] = 0;      
+       int result = array[0];        
+       for(int i = 1; i < array.length; i++){       
+           result ^= array[i];     
+        }       
+        int length = Integer.SIZE;     
+        int flag = 1;     
+       while(length >= 0){        
+            length -= 1;      
+           if(((flag<<length) & result) != 0){         
+           flag <<= length;        
+           break;       
+      }     
+    }       
+        for(int i = 0; i < array.length; i++){         
+           if((array[i] & flag) == 0){           
+                   num1[0] ^= array[i];       
+           }else{          
+                num2[0] ^= array[i];      
+           }     
+     }   
+  }
+ } 
