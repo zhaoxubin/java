@@ -1,0 +1,22 @@
+public class Solution {
+    public String LeftRotateString(String str,int n) {
+        if(str.length()==0 || n == 0){
+            return str;
+        }
+        n %= str.length();
+        char[] list = str.toCharArray();
+        stringReverse(list,0,n-1);
+        stringReverse(list,n,str.length()-1);
+        stringReverse(list,0,str.length()-1);
+        return new String(list);
+    }
+    public static void  stringReverse(char[] list, int start, int end){
+        while(start < end){
+            char temp = list[start];
+            list[start] = list[end];
+            list[end] = temp;
+            start++;
+            end--;
+        }
+    }
+}
