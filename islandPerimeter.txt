@@ -1,0 +1,26 @@
+class Solution {
+    public int islandPerimeter(int[][] grid) {
+       int result = 0;
+       for(int row = 0; row < grid.length; row++){
+           for(int cur = 0; cur < grid[0].length; cur++){
+               if(grid[row][cur] == 1){
+                   int lines = 4;
+                   if(row > 0 && grid[row-1][cur] ==1){
+                       lines--;
+                   }
+                   if(row < grid.length-1 && grid[row+1][cur] == 1){
+                       lines--;
+                   }
+                    if(cur > 0 && grid[row][cur-1] == 1){
+                       lines--;
+                   }
+                    if(cur < grid[0].length-1 && grid[row][cur+1] == 1){
+                       lines--;
+                   }
+                   result += lines;
+               }
+           }
+       }
+       return result;
+    }
+}
