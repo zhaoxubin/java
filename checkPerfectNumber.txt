@@ -1,0 +1,23 @@
+class Solution {
+    public boolean checkPerfectNumber(int num) {
+        if(num == 1){
+            return false;
+        }
+        int  count = 0;
+        int i = 2;
+        for(; i <= Math.sqrt(num); i++){
+           if((num % i) == 0){
+               count += i;
+               count += num/i;
+           }
+        }
+        if(i*i == num ){
+            count += i;
+        }
+        count += 1;
+        if(count == num){
+            return true;
+        }
+        return false;
+    }
+}
